@@ -1,0 +1,136 @@
+/*
+ * Copyright © 2025 anyilanxin zxh(anyilanxin@aliyun.com)
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+plugins {
+	id 'idea'
+	id "java"
+	id 'java-library'
+	id "org.jetbrains.gradle.plugin.idea-ext" version "1.1.10"
+	id "com.diffplug.spotless" version "8.0.0"
+	id "io.github.goooler.shadow" version "8.1.8" apply false
+	id "code-spotless"
+}
+
+
+apply from: rootProject.file('buildSrc/common-config.gradle')
+
+
+// root关闭一些任务
+gradle.taskGraph.whenReady {
+	tasks.each { task ->
+		if (task.name.startsWith('boot') ||
+				task.name.startsWith('jar')) {
+			task.enabled = false
+		}
+	}
+}
+
+
+// 所有项目下载仓库
+
+// 编译jdk版本
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(25)
+	}
+}
+group = 'com.anyilanxin.msgpack'
+tasks.withType(Jar).configureEach {
+	duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}
+
+// 禁用分发脚本打包以及 test fixturesJar
+gradle.taskGraph.whenReady {
+	tasks.each { task ->
+		if (task.name.contains("startScripts") || task.name == "testFixturesJar") {
+			task.enabled = false
+			task.group = null
+		}
+	}
+}
+
+tasks.withType(JavaCompile).configureEach {
+	options.compilerArgs.add("-parameters")
+	options.encoding = "UTF-8"
+}
+
+tasks.withType(JavaExec).configureEach {
+	jvmArgs += [
+			"--add-opens=java.base/jdk.internal.misc=ALL-UNNAMED",
+			"-Xshare:auto",
+			"-Xshare:on"
+	]
+}
+
+tasks.withType(Test).configureEach {
+	jvmArgs += [
+			"--add-opens=java.base/jdk.internal.misc=ALL-UNNAMED",
+			"-Xshare:auto",
+			"-Xshare:on"
+	]
+}
+
+compileJava {
+	options.fork = true
+	options.forkOptions.jvmArgs += ['-Xlint:-deprecation']
+}
+
+// 指定所有项目maven仓库
+repositories {
+	maven {
+		url 'https://maven.aliyun.com/repository/central/'
+	}
+	mavenCentral()
+}
+
+configurations.configureEach {
+	resolutionStrategy {
+		cacheChangingModulesFor 0, "seconds"
+		cacheDynamicVersionsFor 0, "seconds"
+	}
+}
+
+
+// 定义跳过测试的 build 任务
+tasks.register('buildSkipTest') {
+	group = 'build'
+	description = 'Builds the project skip tests'
+	doFirst {
+		tasks.withType(Test).configureEach { testTask ->
+			testTask.enabled = false
+		}
+		tasks.named('check').configure { checkTask ->
+			checkTask.enabled = false
+		}
+	}
+	dependsOn tasks.named('classes')
+	dependsOn tasks.named('jar')
+}
+
+
+dependencies {
+
+	api 'org.agrona:agrona:2.3.2'
+
+	def msgpack = "0.9.10"
+	// https://github.com/msgpack/msgpack-java
+	api "org.msgpack:msgpack-core:$msgpack"
+	api "org.msgpack:jackson-dataformat-msgpack:$msgpack"
+
+	def jacksonVersion = '2.20.1'
+	implementation "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:$jacksonVersion"
+	implementation "com.fasterxml.jackson.core:jackson-core:$jacksonVersion"
+}

@@ -1,0 +1,11 @@
+import org.apache.tools.ant.filters.ReplaceTokens
+
+plugins {
+    id 'groovy-gradle-plugin'
+}
+
+processResources {
+    filteringCharset = 'UTF-8'
+    include( 'META-INF/**')
+}
+
