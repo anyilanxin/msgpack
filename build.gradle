@@ -102,13 +102,13 @@ dependencies {
 	api "org.msgpack:msgpack-core:$msgpack"
 	api "org.msgpack:jackson-dataformat-msgpack:$msgpack"
 
-    def immutables = "2.11.6"
-    api "org.immutables:annotate:$immutables"
-    api "org.immutables:value:$immutables"
+	def immutables = "2.11.6"
+	api "org.immutables:annotate:$immutables"
+	api "org.immutables:value:$immutables"
 
-    def jackson = "2.20.1"
-    implementation "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:$jackson"
-    implementation "com.fasterxml.jackson.core:jackson-core:$jackson"
+	def jackson = "2.20.1"
+	implementation "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:$jackson"
+	implementation "com.fasterxml.jackson.core:jackson-core:$jackson"
 
 	def jacksonVersion = '2.20.1'
 	implementation "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:$jacksonVersion"

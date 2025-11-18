@@ -14,7 +14,6 @@ package com.anyilanxin.msgpack.value;
 
 import com.anyilanxin.msgpack.spec.MsgPackReader;
 import com.anyilanxin.msgpack.spec.MsgPackWriter;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -22,113 +21,113 @@ import java.util.function.BiConsumer;
 import java.util.function.Supplier;
 
 public final class MapValue<K extends BaseValue, V extends BaseValue> extends BaseValue {
-    private final Map<K, V> map;
-    private final Supplier<K> keyFactory;
-    private final Supplier<V> valueFactory;
+  private final Map<K, V> map;
+  private final Supplier<K> keyFactory;
+  private final Supplier<V> valueFactory;
 
-    public MapValue(final Supplier<K> keyFactory, final Supplier<V> valueFactory) {
-        this.keyFactory = keyFactory;
-        this.valueFactory = valueFactory;
-        map = new HashMap<>();
+  public MapValue(final Supplier<K> keyFactory, final Supplier<V> valueFactory) {
+    this.keyFactory = keyFactory;
+    this.valueFactory = valueFactory;
+    map = new HashMap<>();
+  }
+
+  @Override
+  public void reset() {
+    map.clear();
+  }
+
+  public boolean isEmpty() {
+    return map.isEmpty();
+  }
+
+  @Override
+  public void writeJSON(final StringBuilder builder) {
+    builder.append("{");
+    int i = 0;
+    for (final var entry : map.entrySet()) {
+      if (i > 0) {
+        builder.append(",");
+      }
+      final K key = entry.getKey();
+      key.writeJSON(builder);
+      builder.append("=");
+      final V value = entry.getValue();
+      value.writeJSON(builder);
+      i++;
+    }
+    builder.append("}");
+  }
+
+  @Override
+  public void write(final MsgPackWriter writer) {
+    writer.writeMapHeader(map.size());
+    for (final Map.Entry<K, V> entry : map.entrySet()) {
+      entry.getKey().write(writer);
+      entry.getValue().write(writer);
+    }
+  }
+
+  @Override
+  public void read(final MsgPackReader reader) {
+    reset();
+    final int size = reader.readMapHeader();
+    for (int i = 0; i < size; i++) {
+      final var key = keyFactory.get();
+      key.read(reader);
+      final var value = valueFactory.get();
+      value.read(reader);
+      map.put(key, value);
+    }
+  }
+
+  @Override
+  public int getEncodedLength() {
+    return 0;
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(map);
+  }
+
+  @Override
+  public boolean equals(final Object o) {
+    if (this == o) {
+      return true;
     }
 
-    @Override
-    public void reset() {
-        map.clear();
+    if (!(o instanceof final MapValue<?, ?> that)) {
+      return false;
     }
 
-    public boolean isEmpty() {
-        return map.isEmpty();
-    }
+    return map.equals(that.map);
+  }
 
-    @Override
-    public void writeJSON(final StringBuilder builder) {
-        builder.append("{");
-        int i = 0;
-        for (final var entry : map.entrySet()) {
-            if (i > 0) {
-                builder.append(",");
-            }
-            final K key = entry.getKey();
-            key.writeJSON(builder);
-            builder.append("=");
-            final V value = entry.getValue();
-            value.writeJSON(builder);
-            i++;
-        }
-        builder.append("}");
-    }
+  public K key() {
+    return keyFactory.get();
+  }
 
-    @Override
-    public void write(final MsgPackWriter writer) {
-        writer.writeMapHeader(map.size());
-        for (final Map.Entry<K, V> entry : map.entrySet()) {
-            entry.getKey().write(writer);
-            entry.getValue().write(writer);
-        }
-    }
+  public V value() {
+    return valueFactory.get();
+  }
 
-    @Override
-    public void read(final MsgPackReader reader) {
-        reset();
-        final int size = reader.readMapHeader();
-        for (int i = 0; i < size; i++) {
-            final var key = keyFactory.get();
-            key.read(reader);
-            final var value = valueFactory.get();
-            value.read(reader);
-            map.put(key, value);
-        }
-    }
+  public void put(final K key, final V value) {
+    map.put(key, value);
+  }
 
-    @Override
-    public int getEncodedLength() {
-        return 0;
-    }
+  public void forEach(final BiConsumer<? super K, ? super V> action) {
+    map.forEach(action);
+  }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(map);
-    }
+  public V get(final K key) {
+    return map.get(key);
+  }
 
-    @Override
-    public boolean equals(final Object o) {
-        if (this == o) {
-            return true;
-        }
+  public void remove(final K key) {
+    map.remove(key);
+  }
 
-        if (!(o instanceof final MapValue<?, ?> that)) {
-            return false;
-        }
-
-        return map.equals(that.map);
-    }
-
-    public K key() {
-        return keyFactory.get();
-    }
-
-    public V value() {
-        return valueFactory.get();
-    }
-
-    public void put(final K key, final V value) {
-        map.put(key, value);
-    }
-
-    public void forEach(final BiConsumer<? super K, ? super V> action) {
-        map.forEach(action);
-    }
-
-    public V get(final K key) {
-        return map.get(key);
-    }
-
-    public void remove(final K key) {
-        map.remove(key);
-    }
-
-    public int size() {
-        return map.size();
-    }
+  public int size() {
+    return map.size();
+  }
 }

@@ -16,22 +16,21 @@
  */
 package com.anyilanxin.msgpack.util;
 
+import static com.anyilanxin.msgpack.util.StringUtil.getBytes;
+
 import com.anyilanxin.msgpack.buffer.BufferReader;
 import com.anyilanxin.msgpack.buffer.BufferWriter;
+import java.nio.ByteOrder;
+import java.nio.charset.StandardCharsets;
 import org.agrona.DirectBuffer;
 import org.agrona.ExpandableArrayBuffer;
 import org.agrona.MutableDirectBuffer;
 import org.agrona.concurrent.UnsafeBuffer;
 
-import java.nio.ByteOrder;
-import java.nio.charset.StandardCharsets;
-
-import static com.anyilanxin.msgpack.util.StringUtil.getBytes;
-
 public final class BufferUtil {
   public static final int NO_WRAP = 1;
-    // bytes
-    public static final int DEFAULT_WRAP = 16;
+  // bytes
+  public static final int DEFAULT_WRAP = 16;
 
   private static final char[] HEX_CODE = "0123456789ABCDEF".toCharArray();
 
@@ -51,7 +50,7 @@ public final class BufferUtil {
     return new String(bytes, StandardCharsets.UTF_8);
   }
 
-    public static DirectBuffer wrapString(final String argument) {
+  public static DirectBuffer wrapString(final String argument) {
     return new UnsafeBuffer(getBytes(argument));
   }
 
@@ -74,7 +73,7 @@ public final class BufferUtil {
       boolean equal = true;
 
       for (int i = 0; i < buffer1.capacity() && equal; i++) {
-          equal = buffer1.getByte(i) == buffer2.getByte(i);
+        equal = buffer1.getByte(i) == buffer2.getByte(i);
       }
       return equal;
     } else {
@@ -185,11 +184,7 @@ public final class BufferUtil {
           hexBuilder.append("   ");
         }
       }
-      builder
-              .append(hexBuilder)
-          .append('|')
-              .append(asciiBuilder)
-          .append("|\n");
+      builder.append(hexBuilder).append('|').append(asciiBuilder).append("|\n");
 
       asciiBuilder.delete(0, asciiBuilder.length());
       hexBuilder.delete(0, hexBuilder.length());
@@ -210,7 +205,7 @@ public final class BufferUtil {
     return array;
   }
 
-    public static MutableDirectBuffer wrapArray(final byte[] array) {
+  public static MutableDirectBuffer wrapArray(final byte[] array) {
     return new UnsafeBuffer(array);
   }
 
@@ -219,7 +214,7 @@ public final class BufferUtil {
     return new UnsafeBuffer(intArrayToByteArray(bytes));
   }
 
-    public static int bufferContentsHash(final DirectBuffer buffer) {
+  public static int bufferContentsHash(final DirectBuffer buffer) {
     int hashCode = 1;
 
     for (int i = 0, length = buffer.capacity(); i < length; i++) {
@@ -241,12 +236,12 @@ public final class BufferUtil {
    * @return true if array starts with the all bytes contained in prefix
    */
   public static boolean startsWith(
-          final byte[] prefix,
-          final int prefixOffset,
-          final int prefixLength,
-          final byte[] content,
-          int contentOffset,
-          final int contentLength) {
+      final byte[] prefix,
+      final int prefixOffset,
+      final int prefixLength,
+      final byte[] content,
+      int contentOffset,
+      final int contentLength) {
     if (contentLength < prefixLength) {
       return false;
     }
@@ -260,7 +255,7 @@ public final class BufferUtil {
     return true;
   }
 
-    private static byte[] intArrayToByteArray(final int[] input) {
+  private static byte[] intArrayToByteArray(final int[] input) {
     final byte[] result = new byte[input.length];
     for (int i = 0; i < input.length; i++) {
       result[i] = (byte) input[i];
@@ -317,7 +312,7 @@ public final class BufferUtil {
   }
 
   public static void ensureGreaterThanOrEqual(
-          final String property, final long testValue, final long comparisonValue) {
+      final String property, final long testValue, final long comparisonValue) {
     if (testValue < comparisonValue) {
       throw new RuntimeException(property + " must be greater than or equal to " + comparisonValue);
     }

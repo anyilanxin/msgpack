@@ -14,66 +14,65 @@ package com.anyilanxin.msgpack.value;
 
 import com.anyilanxin.msgpack.spec.MsgPackReader;
 import com.anyilanxin.msgpack.spec.MsgPackWriter;
-
 import java.util.Objects;
 
 public class ShortValue extends BaseValue {
-    protected short value;
+  protected short value;
 
-    public ShortValue() {
-        this((short) 0);
-    }
+  public ShortValue() {
+    this((short) 0);
+  }
 
-    public ShortValue(final short initialValue) {
-        value = initialValue;
-    }
+  public ShortValue(final short initialValue) {
+    value = initialValue;
+  }
 
-    public void setValue(final short val) {
-        value = val;
-    }
+  public void setValue(final short val) {
+    value = val;
+  }
 
-    public short getValue() {
-        return value;
-    }
+  public short getValue() {
+    return value;
+  }
 
-    @Override
-    public void reset() {
-        value = 0;
-    }
+  @Override
+  public void reset() {
+    value = 0;
+  }
 
-    @Override
-    public void writeJSON(final StringBuilder builder) {
-        builder.append(value);
-    }
+  @Override
+  public void writeJSON(final StringBuilder builder) {
+    builder.append(value);
+  }
 
-    @Override
-    public void write(final MsgPackWriter writer) {
-        writer.writeInteger(value);
-    }
+  @Override
+  public void write(final MsgPackWriter writer) {
+    writer.writeInteger(value);
+  }
 
-    @Override
-    public void read(final MsgPackReader reader) {
-        value = reader.readShort();
-    }
+  @Override
+  public void read(final MsgPackReader reader) {
+    value = reader.readShort();
+  }
 
-    @Override
-    public int getEncodedLength() {
-        return MsgPackWriter.getEncodedLongValueLength(value);
-    }
+  @Override
+  public int getEncodedLength() {
+    return MsgPackWriter.getEncodedLongValueLength(value);
+  }
 
-    @Override
-    public boolean equals(final Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (!(o instanceof final ShortValue that)) {
-            return false;
-        }
-        return getValue() == that.getValue();
+  @Override
+  public boolean equals(final Object o) {
+    if (this == o) {
+      return true;
     }
+    if (!(o instanceof final ShortValue that)) {
+      return false;
+    }
+    return getValue() == that.getValue();
+  }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(getValue());
-    }
+  @Override
+  public int hashCode() {
+    return Objects.hash(getValue());
+  }
 }

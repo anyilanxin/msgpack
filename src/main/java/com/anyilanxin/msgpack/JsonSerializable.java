@@ -16,9 +16,9 @@ import org.immutables.value.Value;
 
 public interface JsonSerializable {
 
-    @Value.NonAttribute
-    default String toJson() {
-        throw new UnsupportedOperationException(
-                "Failed to serialize value to JSON; this implementation does not support it out of the box");
-    }
+  @Value.NonAttribute
+  default String toJson() {
+    throw new UnsupportedOperationException(
+        "Failed to serialize value to JSON; this implementation does not support it out of the box");
+  }
 }
