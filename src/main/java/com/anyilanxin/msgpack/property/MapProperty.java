@@ -34,6 +34,24 @@ public final class MapProperty<K extends BaseValue, V extends BaseValue>
     isSet = true;
   }
 
+  public MapProperty(
+      final int initialCapacity,
+      final String keyString,
+      final Supplier<K> keyFactory,
+      final Supplier<V> valueFactory) {
+    super(keyString, new MapValue<>(initialCapacity, keyFactory, valueFactory));
+    isSet = true;
+  }
+
+  public MapProperty(
+      final int initialCapacity,
+      final StringValue key,
+      final Supplier<K> keyFactory,
+      final Supplier<V> valueFactory) {
+    super(key, new MapValue<>(initialCapacity, keyFactory, valueFactory));
+    isSet = true;
+  }
+
   @Override
   public void reset() {
     super.reset();

@@ -18,8 +18,6 @@ package com.anyilanxin.msgpack.value;
 
 import com.anyilanxin.msgpack.spec.MsgPackReader;
 import com.anyilanxin.msgpack.spec.MsgPackWriter;
-import org.agrona.collections.CollectionUtil;
-
 import java.util.*;
 import java.util.function.Supplier;
 
@@ -29,17 +27,16 @@ public class ArrayValue<T extends BaseValue> extends BaseValue
   private final Supplier<T> valueFactory;
 
   public ArrayValue(final Supplier<T> valueFactory) {
-      this(10, valueFactory);
+    this(10, valueFactory);
   }
 
-    public ArrayValue(final int initialCapacity, final Supplier<T> valueFactory) {
-        if (initialCapacity < 0) {
-            throw new IllegalArgumentException("Illegal initial capacity: " +
-                    initialCapacity);
-        }
-        this.valueFactory = valueFactory;
-        items = new ArrayList<>(initialCapacity);
+  public ArrayValue(final int initialCapacity, final Supplier<T> valueFactory) {
+    if (initialCapacity < 0) {
+      throw new IllegalArgumentException("Illegal initial capacity: " + initialCapacity);
     }
+    this.valueFactory = valueFactory;
+    items = new ArrayList<>(initialCapacity);
+  }
 
   @Override
   public void reset() {
@@ -87,8 +84,11 @@ public class ArrayValue<T extends BaseValue> extends BaseValue
 
   @Override
   public int getEncodedLength() {
-    return MsgPackWriter.getEncodedArrayHeaderLenght(items.size())
-        + CollectionUtil.sum(items, BaseValue::getEncodedLength);
+    int length = MsgPackWriter.getEncodedArrayHeaderLenght(items.size());
+    for (final T item : items) {
+      length += item.getEncodedLength();
+    }
+    return length;
   }
 
   @Override

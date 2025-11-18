@@ -37,6 +37,18 @@ public class ArrayProperty<T extends BaseValue> extends BaseProperty<ArrayValue<
     isSet = true;
   }
 
+  public ArrayProperty(
+      final int initialCapacity, final String keyString, final Supplier<T> innerValueFactory) {
+    super(keyString, new ArrayValue<>(initialCapacity, innerValueFactory));
+    isSet = true;
+  }
+
+  public ArrayProperty(
+      final int initialCapacity, final StringValue key, final Supplier<T> innerValueFactory) {
+    super(key, new ArrayValue<>(initialCapacity, innerValueFactory));
+    isSet = true;
+  }
+
   @Override
   public void reset() {
     super.reset();
@@ -44,8 +56,12 @@ public class ArrayProperty<T extends BaseValue> extends BaseProperty<ArrayValue<
   }
 
   @Override
-  public T add(int index) {
-    return null;
+  public T add(final int index) {
+    try {
+      return value.add(index);
+    } catch (final Exception e) {
+      throw new MsgpackPropertyException(getKey(), e);
+    }
   }
 
   @Override
@@ -62,7 +78,7 @@ public class ArrayProperty<T extends BaseValue> extends BaseProperty<ArrayValue<
   public T add() {
     try {
       return value.add();
-    } catch (Exception e) {
+    } catch (final Exception e) {
       throw new MsgpackPropertyException(getKey(), e);
     }
   }
