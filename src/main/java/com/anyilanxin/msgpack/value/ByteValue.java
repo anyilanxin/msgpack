@@ -12,12 +12,11 @@
  */
 package com.anyilanxin.msgpack.value;
 
+import static com.anyilanxin.msgpack.spec.MsgPackWriter.getEncodedLongValueLength;
+
 import com.anyilanxin.msgpack.spec.MsgPackReader;
 import com.anyilanxin.msgpack.spec.MsgPackWriter;
-
 import java.util.Objects;
-
-import static com.anyilanxin.msgpack.spec.MsgPackWriter.getEncodedLongValueLength;
 
 /**
  * @author zxuanhong
@@ -60,8 +59,7 @@ public class ByteValue extends BaseValue {
   public void read(final MsgPackReader reader) {
     final long longValue = reader.readInteger();
     if (longValue < Byte.MIN_VALUE || longValue > Byte.MAX_VALUE) {
-      throw new RuntimeException(
-              String.format("Value doesn't fit into an byte: %s.", longValue));
+      throw new RuntimeException(String.format("Value doesn't fit into an byte: %s.", longValue));
     }
     value = (byte) longValue;
   }

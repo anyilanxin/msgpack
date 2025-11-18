@@ -12,12 +12,11 @@
  */
 package com.anyilanxin.msgpack.value;
 
+import static com.anyilanxin.msgpack.spec.MsgPackWriter.getEncodedDoubleValueLength;
+
 import com.anyilanxin.msgpack.spec.MsgPackReader;
 import com.anyilanxin.msgpack.spec.MsgPackWriter;
-
 import java.util.Objects;
-
-import static com.anyilanxin.msgpack.spec.MsgPackWriter.getEncodedDoubleValueLength;
 
 /**
  * @author zxuanhong
@@ -61,7 +60,7 @@ public class FloatValue extends BaseValue {
     final double doubleValue = reader.readDouble();
     if (doubleValue < Float.MIN_VALUE || doubleValue > Float.MAX_VALUE) {
       throw new RuntimeException(
-              String.format("Value doesn't fit into an float: %s.", doubleValue));
+          String.format("Value doesn't fit into an float: %s.", doubleValue));
     }
     value = (float) doubleValue;
   }
