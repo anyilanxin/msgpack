@@ -14,6 +14,7 @@ package com.anyilanxin.msgpack.value;
 
 import com.anyilanxin.msgpack.spec.MsgPackReader;
 import com.anyilanxin.msgpack.spec.MsgPackWriter;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -26,10 +27,18 @@ public final class MapValue<K extends BaseValue, V extends BaseValue> extends Ba
   private final Supplier<V> valueFactory;
 
   public MapValue(final Supplier<K> keyFactory, final Supplier<V> valueFactory) {
-    this.keyFactory = keyFactory;
-    this.valueFactory = valueFactory;
-    map = new HashMap<>();
+      this(16, keyFactory, valueFactory);
   }
+
+    public MapValue(final int initialCapacity, final Supplier<K> keyFactory, final Supplier<V> valueFactory) {
+        if (initialCapacity < 0) {
+            throw new IllegalArgumentException("Illegal initial capacity: " +
+                    initialCapacity);
+        }
+        this.keyFactory = keyFactory;
+        this.valueFactory = valueFactory;
+        map = new HashMap<>(initialCapacity);
+    }
 
   @Override
   public void reset() {

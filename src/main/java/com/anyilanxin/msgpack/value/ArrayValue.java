@@ -18,9 +18,10 @@ package com.anyilanxin.msgpack.value;
 
 import com.anyilanxin.msgpack.spec.MsgPackReader;
 import com.anyilanxin.msgpack.spec.MsgPackWriter;
+import org.agrona.collections.CollectionUtil;
+
 import java.util.*;
 import java.util.function.Supplier;
-import org.agrona.collections.CollectionUtil;
 
 public class ArrayValue<T extends BaseValue> extends BaseValue
     implements Iterable<T>, RandomAccess {
@@ -28,10 +29,17 @@ public class ArrayValue<T extends BaseValue> extends BaseValue
   private final Supplier<T> valueFactory;
 
   public ArrayValue(final Supplier<T> valueFactory) {
-    this.valueFactory = valueFactory;
-
-    items = new ArrayList<>();
+      this(10, valueFactory);
   }
+
+    public ArrayValue(final int initialCapacity, final Supplier<T> valueFactory) {
+        if (initialCapacity < 0) {
+            throw new IllegalArgumentException("Illegal initial capacity: " +
+                    initialCapacity);
+        }
+        this.valueFactory = valueFactory;
+        items = new ArrayList<>(initialCapacity);
+    }
 
   @Override
   public void reset() {

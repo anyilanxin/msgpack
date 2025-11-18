@@ -20,6 +20,7 @@ import com.anyilanxin.msgpack.property.BaseProperty;
 import com.anyilanxin.msgpack.property.UndeclaredProperty;
 import com.anyilanxin.msgpack.spec.MsgPackReader;
 import com.anyilanxin.msgpack.spec.MsgPackWriter;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -32,6 +33,10 @@ public class ObjectValue extends BaseValue {
   private final StringValue decodedKey = new StringValue();
 
   public ObjectValue(final int initialCapacity) {
+      if (initialCapacity < 0) {
+          throw new IllegalArgumentException("Illegal initial capacity: " +
+                  initialCapacity);
+      }
     declaredProperties = new ArrayList<>(initialCapacity);
   }
 
