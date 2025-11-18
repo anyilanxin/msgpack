@@ -16,20 +16,22 @@
  */
 package com.anyilanxin.msgpack.util;
 
-import static com.anyilanxin.msgpack.util.StringUtil.getBytes;
-
 import com.anyilanxin.msgpack.buffer.BufferReader;
 import com.anyilanxin.msgpack.buffer.BufferWriter;
-import java.nio.ByteOrder;
-import java.nio.charset.StandardCharsets;
 import org.agrona.DirectBuffer;
 import org.agrona.ExpandableArrayBuffer;
 import org.agrona.MutableDirectBuffer;
 import org.agrona.concurrent.UnsafeBuffer;
 
+import java.nio.ByteOrder;
+import java.nio.charset.StandardCharsets;
+
+import static com.anyilanxin.msgpack.util.StringUtil.getBytes;
+
 public final class BufferUtil {
   public static final int NO_WRAP = 1;
-  public static final int DEFAULT_WRAP = 16; // bytes
+    // bytes
+    public static final int DEFAULT_WRAP = 16;
 
   private static final char[] HEX_CODE = "0123456789ABCDEF".toCharArray();
 
@@ -49,12 +51,12 @@ public final class BufferUtil {
     return new String(bytes, StandardCharsets.UTF_8);
   }
 
-  public static DirectBuffer wrapString(String argument) {
+    public static DirectBuffer wrapString(final String argument) {
     return new UnsafeBuffer(getBytes(argument));
   }
 
   /** Compare the given buffers. */
-  public static boolean equals(DirectBuffer buffer1, DirectBuffer buffer2) {
+  public static boolean equals(final DirectBuffer buffer1, final DirectBuffer buffer2) {
     if (buffer1 instanceof UnsafeBuffer && buffer2 instanceof UnsafeBuffer) {
       return buffer1.equals(buffer2);
     } else if (buffer1 instanceof ExpandableArrayBuffer
@@ -66,13 +68,13 @@ public final class BufferUtil {
   }
 
   /** byte-by-byte comparison of two buffers */
-  public static boolean contentsEqual(DirectBuffer buffer1, DirectBuffer buffer2) {
+  public static boolean contentsEqual(final DirectBuffer buffer1, final DirectBuffer buffer2) {
 
     if (buffer1.capacity() == buffer2.capacity()) {
       boolean equal = true;
 
       for (int i = 0; i < buffer1.capacity() && equal; i++) {
-        equal &= buffer1.getByte(i) == buffer2.getByte(i);
+          equal = buffer1.getByte(i) == buffer2.getByte(i);
       }
       return equal;
     } else {
@@ -184,9 +186,9 @@ public final class BufferUtil {
         }
       }
       builder
-          .append(hexBuilder.toString())
+              .append(hexBuilder)
           .append('|')
-          .append(asciiBuilder.toString())
+              .append(asciiBuilder)
           .append("|\n");
 
       asciiBuilder.delete(0, asciiBuilder.length());
@@ -208,16 +210,16 @@ public final class BufferUtil {
     return array;
   }
 
-  public static MutableDirectBuffer wrapArray(byte[] array) {
+    public static MutableDirectBuffer wrapArray(final byte[] array) {
     return new UnsafeBuffer(array);
   }
 
   /** Does not care about overflows; just for convenience of writing int literals */
-  public static MutableDirectBuffer wrapBytes(int... bytes) {
+  public static MutableDirectBuffer wrapBytes(final int... bytes) {
     return new UnsafeBuffer(intArrayToByteArray(bytes));
   }
 
-  public static int bufferContentsHash(DirectBuffer buffer) {
+    public static int bufferContentsHash(final DirectBuffer buffer) {
     int hashCode = 1;
 
     for (int i = 0, length = buffer.capacity(); i < length; i++) {
@@ -239,12 +241,12 @@ public final class BufferUtil {
    * @return true if array starts with the all bytes contained in prefix
    */
   public static boolean startsWith(
-      final byte[] prefix,
-      int prefixOffset,
-      final int prefixLength,
-      final byte[] content,
-      int contentOffset,
-      final int contentLength) {
+          final byte[] prefix,
+          final int prefixOffset,
+          final int prefixLength,
+          final byte[] content,
+          int contentOffset,
+          final int contentLength) {
     if (contentLength < prefixLength) {
       return false;
     }
@@ -258,7 +260,7 @@ public final class BufferUtil {
     return true;
   }
 
-  private static byte[] intArrayToByteArray(int[] input) {
+    private static byte[] intArrayToByteArray(final int[] input) {
     final byte[] result = new byte[input.length];
     for (int i = 0; i < input.length; i++) {
       result[i] = (byte) input[i];
@@ -315,7 +317,7 @@ public final class BufferUtil {
   }
 
   public static void ensureGreaterThanOrEqual(
-      String property, long testValue, long comparisonValue) {
+          final String property, final long testValue, final long comparisonValue) {
     if (testValue < comparisonValue) {
       throw new RuntimeException(property + " must be greater than or equal to " + comparisonValue);
     }
