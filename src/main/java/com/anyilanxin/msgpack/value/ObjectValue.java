@@ -25,13 +25,17 @@ import java.util.List;
 import java.util.Objects;
 
 public class ObjectValue extends BaseValue {
-  private final List<BaseProperty<? extends BaseValue>> declaredProperties = new ArrayList<>();
+  private final List<BaseProperty<? extends BaseValue>> declaredProperties;
   private final List<UndeclaredProperty> undeclaredProperties = new ArrayList<>();
   private final List<UndeclaredProperty> recycledProperties = new ArrayList<>();
 
   private final StringValue decodedKey = new StringValue();
 
-  public ObjectValue declareProperty(BaseProperty<? extends BaseValue> prop) {
+  public ObjectValue(final int initialCapacity) {
+    declaredProperties = new ArrayList<>(initialCapacity);
+  }
+
+  public ObjectValue declareProperty(final BaseProperty<? extends BaseValue> prop) {
     declaredProperties.add(prop);
     return this;
   }
@@ -49,7 +53,7 @@ public class ObjectValue extends BaseValue {
     }
   }
 
-  private UndeclaredProperty newUndeclaredProperty(StringValue key) {
+  private UndeclaredProperty newUndeclaredProperty(final StringValue key) {
     final int recycledSize = recycledProperties.size();
 
     UndeclaredProperty prop = null;
@@ -67,7 +71,7 @@ public class ObjectValue extends BaseValue {
   }
 
   @Override
-  public void writeJSON(StringBuilder builder) {
+  public void writeJSON(final StringBuilder builder) {
     builder.append("{");
 
     writeJson(builder, declaredProperties);
@@ -76,7 +80,8 @@ public class ObjectValue extends BaseValue {
     builder.append("}");
   }
 
-  protected <T extends BaseProperty<?>> void writeJson(StringBuilder builder, List<T> properties) {
+  protected <T extends BaseProperty<?>> void writeJson(
+      final StringBuilder builder, final List<T> properties) {
     for (int i = 0; i < properties.size(); i++) {
       if (i > 0) {
         builder.append(",");
@@ -91,7 +96,7 @@ public class ObjectValue extends BaseValue {
   }
 
   @Override
-  public void read(MsgPackReader reader) {
+  public void read(final MsgPackReader reader) {
     final int mapSize = reader.readMapHeader();
 
     for (int i = 0; i < mapSize; ++i) {
@@ -114,7 +119,7 @@ public class ObjectValue extends BaseValue {
 
       try {
         prop.read(reader);
-      } catch (Exception e) {
+      } catch (final Exception e) {
         throw new RuntimeException(String.format("Could not read property '%s'", prop.getKey()), e);
       }
     }
@@ -135,7 +140,7 @@ public class ObjectValue extends BaseValue {
    * write all the values.
    */
   @Override
-  public void write(MsgPackWriter writer) {
+  public void write(final MsgPackWriter writer) {
     final int size = declaredProperties.size() + undeclaredProperties.size();
 
     writer.writeMapHeader(size);
@@ -143,7 +148,8 @@ public class ObjectValue extends BaseValue {
     write(writer, undeclaredProperties);
   }
 
-  protected <T extends BaseProperty<?>> void write(MsgPackWriter writer, List<T> properties) {
+  protected <T extends BaseProperty<?>> void write(
+      final MsgPackWriter writer, final List<T> properties) {
     for (final BaseProperty<? extends BaseValue> prop : properties) {
       prop.write(writer);
     }
@@ -161,12 +167,12 @@ public class ObjectValue extends BaseValue {
   }
 
   @Override
-  public boolean equals(Object o) {
+  public boolean equals(final Object o) {
     if (this == o) {
       return true;
     }
 
-    if (!(o instanceof ObjectValue that)) {
+    if (!(o instanceof final ObjectValue that)) {
       return false;
     }
 
@@ -180,7 +186,7 @@ public class ObjectValue extends BaseValue {
     return Objects.hash(declaredProperties, undeclaredProperties, recycledProperties);
   }
 
-  protected <T extends BaseProperty<?>> int getEncodedLength(List<T> properties) {
+  protected <T extends BaseProperty<?>> int getEncodedLength(final List<T> properties) {
     int length = 0;
     for (final T prop : properties) {
       length += prop.getEncodedLength();

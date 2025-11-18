@@ -342,14 +342,11 @@ public final class MsgPackReader {
     final byte headerByte = buffer.getByte(offset);
     ++offset;
 
-    final boolean theBool =
-        switch (headerByte) {
-          case TRUE -> true;
-          case FALSE -> false;
-          default -> throw exceptionOnUnknownHeader("boolean", headerByte);
-        };
-
-    return theBool;
+    return switch (headerByte) {
+      case TRUE -> true;
+      case FALSE -> false;
+      default -> throw exceptionOnUnknownHeader("boolean", headerByte);
+    };
   }
 
   public MsgPackToken readToken() {
@@ -547,7 +544,7 @@ public final class MsgPackReader {
     return offset < buffer.capacity();
   }
 
-  protected MsgpackReaderException exceptionOnUnknownHeader(
+  private MsgpackReaderException exceptionOnUnknownHeader(
       final String name, final byte headerByte) {
     return new MsgpackReaderException(
         String.format(
