@@ -26,20 +26,7 @@ plugins {
 
 
 apply from: rootProject.file('buildSrc/common-config.gradle')
-
-
-// root关闭一些任务
-gradle.taskGraph.whenReady {
-	tasks.each { task ->
-		if (task.name.startsWith('boot') ||
-				task.name.startsWith('jar')) {
-			task.enabled = false
-		}
-	}
-}
-
-
-// 所有项目下载仓库
+group = 'com.anyilanxin.msgpack'
 
 // 编译jdk版本
 java {
@@ -47,24 +34,9 @@ java {
 		languageVersion = JavaLanguageVersion.of(25)
 	}
 }
-group = 'com.anyilanxin.msgpack'
+
 tasks.withType(Jar).configureEach {
 	duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-}
-
-// 禁用分发脚本打包以及 test fixturesJar
-gradle.taskGraph.whenReady {
-	tasks.each { task ->
-		if (task.name.contains("startScripts") || task.name == "testFixturesJar") {
-			task.enabled = false
-			task.group = null
-		}
-	}
-}
-
-tasks.withType(JavaCompile).configureEach {
-	options.compilerArgs.add("-parameters")
-	options.encoding = "UTF-8"
 }
 
 tasks.withType(JavaExec).configureEach {
