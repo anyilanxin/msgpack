@@ -27,8 +27,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Consumer;
 
-import static io.zeebe.util.buffer.BufferUtil.bufferAsString;
-import static io.zeebe.util.buffer.BufferUtil.wrapArray;
+import static com.anyilanxin.msgpack.util.BufferUtil.bufferAsString;
+import static com.anyilanxin.msgpack.util.BufferUtil.wrapArray;
 
 public class MsgPackUtil {
 

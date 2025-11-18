@@ -19,11 +19,11 @@ package com.anyilanxin.msgpack;
 import com.anyilanxin.msgpack.property.StringProperty;
 import com.anyilanxin.msgpack.spec.MsgPackReader;
 import com.anyilanxin.msgpack.spec.MsgPackWriter;
+import com.anyilanxin.msgpack.util.BufferUtil;
 import com.anyilanxin.msgpack.value.ArrayValue;
 import com.anyilanxin.msgpack.value.BaseValue;
 import com.anyilanxin.msgpack.value.IntegerValue;
 import com.anyilanxin.msgpack.value.StringValue;
-import io.zeebe.util.buffer.BufferUtil;
 import org.agrona.DirectBuffer;
 import org.agrona.MutableDirectBuffer;
 import org.agrona.concurrent.UnsafeBuffer;
@@ -43,7 +43,7 @@ public class ArrayValueTest {
     private final MsgPackWriter writer = new MsgPackWriter();
     private final MsgPackReader reader = new MsgPackReader();
 
-    private final ArrayValue<IntegerValue> array = new ArrayValue<>(new IntegerValue());
+    private final ArrayValue<IntegerValue> array = new ArrayValue<>(IntegerValue::new);
 
     @Rule
     public final ExpectedException exception = ExpectedException.none();
@@ -222,7 +222,7 @@ public class ArrayValueTest {
     @Test
     public void shouldUpdateWithSmallerValue() {
         // given
-        final ArrayValue<StringValue> array = new ArrayValue<>(new StringValue());
+        final ArrayValue<StringValue> array = new ArrayValue<>(StringValue::new);
         addStringValues(array, "foo", "bar", "baz");
 
         // when
@@ -242,7 +242,7 @@ public class ArrayValueTest {
     @Test
     public void shouldUpdateWithBiggerValue() {
         // given
-        final ArrayValue<StringValue> array = new ArrayValue<>(new StringValue());
+        final ArrayValue<StringValue> array = new ArrayValue<>(StringValue::new);
         addStringValues(array, "foo", "bar", "baz");
 
         // when
@@ -307,12 +307,12 @@ public class ArrayValueTest {
     @Test
     public void shouldSerializeUndeclaredProperties() {
         // given
-        final ArrayValue<Foo> fooArray = new ArrayValue<>(new Foo());
+        final ArrayValue<Foo> fooArray = new ArrayValue<>(Foo::new);
         fooArray.add().setFoo("foo").setBar("bar");
 
         final DirectBuffer buffer = encode(fooArray);
 
-        final ArrayValue<Bar> barArray = new ArrayValue<>(new Bar());
+        final ArrayValue<Bar> barArray = new ArrayValue<>(Bar::new);
 
         // when
         decode(barArray, buffer);
@@ -365,7 +365,7 @@ public class ArrayValueTest {
     @Test
     public void shouldWriteJson() {
         // given
-        final ArrayValue<MinimalPOJO> array = new ArrayValue<>(new MinimalPOJO());
+        final ArrayValue<MinimalPOJO> array = new ArrayValue<>(MinimalPOJO::new);
         array.add().setLongProp(1);
         array.add().setLongProp(2);
         array.add().setLongProp(3);
@@ -434,12 +434,13 @@ public class ArrayValueTest {
         value.read(reader);
     }
 
-    class Foo extends UnpackedObject {
+    static class Foo extends UnpackedObject {
 
         private final StringProperty fooProp = new StringProperty("foo");
         private final StringProperty barProp = new StringProperty("bar");
 
         Foo() {
+            super(2);
             declareProperty(fooProp).declareProperty(barProp);
         }
 
@@ -462,11 +463,12 @@ public class ArrayValueTest {
         }
     }
 
-    class Bar extends UnpackedObject {
+    static class Bar extends UnpackedObject {
 
         private final StringProperty barProp = new StringProperty("bar");
 
         Bar() {
+            super(1);
             declareProperty(barProp);
         }
 

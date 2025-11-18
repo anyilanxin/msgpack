@@ -12,12 +12,11 @@
  */
 package com.anyilanxin.msgpack.value;
 
+import static com.anyilanxin.msgpack.spec.MsgPackWriter.getEncodedDoubleValueLength;
+
 import com.anyilanxin.msgpack.spec.MsgPackReader;
 import com.anyilanxin.msgpack.spec.MsgPackWriter;
-
 import java.util.Objects;
-
-import static com.anyilanxin.msgpack.spec.MsgPackWriter.getEncodedDoubleValueLength;
 
 /**
  * @author zxuanhong
@@ -63,7 +62,7 @@ public class FloatValue extends BaseValue {
 
   @Override
   public int getEncodedLength() {
-      return getEncodedDoubleValueLength(value);
+    return getEncodedDoubleValueLength(value);
   }
 
   @Override

@@ -16,7 +16,6 @@ import com.anyilanxin.msgpack.value.BaseValue;
 import com.anyilanxin.msgpack.value.MapValue;
 import com.anyilanxin.msgpack.value.StringValue;
 import com.anyilanxin.msgpack.value.ValueMap;
-
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.Supplier;

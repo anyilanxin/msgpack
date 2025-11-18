@@ -27,9 +27,9 @@ import org.junit.runners.Parameterized.Parameters;
 import java.util.Arrays;
 import java.util.function.Consumer;
 
+import static com.anyilanxin.msgpack.BufferAssert.assertThatBuffer;
 import static com.anyilanxin.msgpack.spec.MsgPackType.*;
 import static com.anyilanxin.msgpack.spec.MsgPackUtil.toByte;
-import static io.zeebe.test.util.BufferAssert.assertThatBuffer;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(Parameterized.class)

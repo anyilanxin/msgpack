@@ -16,12 +16,11 @@
  */
 package com.anyilanxin.msgpack.value;
 
+import static com.anyilanxin.msgpack.spec.MsgPackWriter.getEncodedBooleanValueLength;
+
 import com.anyilanxin.msgpack.spec.MsgPackReader;
 import com.anyilanxin.msgpack.spec.MsgPackWriter;
-
 import java.util.Objects;
-
-import static com.anyilanxin.msgpack.spec.MsgPackWriter.getEncodedBooleanValueLength;
 
 public class BooleanValue extends BaseValue {
   private boolean val = false;
@@ -30,8 +29,8 @@ public class BooleanValue extends BaseValue {
     this(false);
   }
 
-    public BooleanValue(final boolean initialValue) {
-        val = initialValue;
+  public BooleanValue(final boolean initialValue) {
+    val = initialValue;
   }
 
   @Override
@@ -43,8 +42,8 @@ public class BooleanValue extends BaseValue {
     return val;
   }
 
-    public void setValue(final boolean value) {
-        val = value;
+  public void setValue(final boolean value) {
+    val = value;
   }
 
   @Override
@@ -64,7 +63,7 @@ public class BooleanValue extends BaseValue {
 
   @Override
   public int getEncodedLength() {
-      return getEncodedBooleanValueLength();
+    return getEncodedBooleanValueLength();
   }
 
   @Override

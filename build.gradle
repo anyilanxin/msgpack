@@ -100,7 +100,8 @@ dependencies {
 	implementation "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:$jackson"
 	implementation "com.fasterxml.jackson.core:jackson-core:$jackson"
 
-	def jacksonVersion = '2.20.1'
-	implementation "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:$jacksonVersion"
-	implementation "com.fasterxml.jackson.core:jackson-core:$jacksonVersion"
+	testImplementation 'org.junit.jupiter:junit-jupiter-engine:6.0.1'
+	testImplementation 'junit:junit:4.13.2'
+	testImplementation "org.msgpack:msgpack-core:$msgpack"
+	testImplementation 'org.assertj:assertj-core:3.27.6'
 }

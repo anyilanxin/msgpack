@@ -26,7 +26,7 @@ import org.junit.Test;
 import java.util.Map;
 
 import static com.anyilanxin.msgpack.MsgPackUtil.encodeMsgPack;
-import static io.zeebe.util.buffer.BufferUtil.wrapString;
+import static com.anyilanxin.msgpack.util.BufferUtil.wrapString;
 import static org.assertj.core.api.Assertions.*;
 
 public class DocumentPropertyTest {
@@ -34,6 +34,7 @@ public class DocumentPropertyTest {
         private final DocumentProperty documentProperty = new DocumentProperty("documentProp");
 
         Document() {
+            super(1);
             declareProperty(documentProperty);
         }
 

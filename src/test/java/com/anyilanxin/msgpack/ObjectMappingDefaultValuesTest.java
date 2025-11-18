@@ -24,9 +24,9 @@ import org.junit.Test;
 
 import java.util.Map;
 
+import static com.anyilanxin.msgpack.BufferAssert.assertThatBuffer;
 import static com.anyilanxin.msgpack.MsgPackUtil.encodeMsgPack;
-import static io.zeebe.test.util.BufferAssert.assertThatBuffer;
-import static io.zeebe.util.buffer.BufferUtil.wrapString;
+import static com.anyilanxin.msgpack.util.BufferUtil.wrapString;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.entry;
 

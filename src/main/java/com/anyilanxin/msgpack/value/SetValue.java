@@ -12,16 +12,15 @@
  */
 package com.anyilanxin.msgpack.value;
 
+import static com.anyilanxin.msgpack.spec.MsgPackWriter.getEncodedArrayHeaderLenght;
+
 import com.anyilanxin.msgpack.spec.MsgPackReader;
 import com.anyilanxin.msgpack.spec.MsgPackWriter;
-
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
-
-import static com.anyilanxin.msgpack.spec.MsgPackWriter.getEncodedArrayHeaderLenght;
 
 /**
  * @author zxuanhong
@@ -88,7 +87,7 @@ public final class SetValue<T extends BaseValue> extends BaseValue {
 
   @Override
   public int getEncodedLength() {
-      int length = getEncodedArrayHeaderLenght(set.size());
+    int length = getEncodedArrayHeaderLenght(set.size());
     for (final T item : set) {
       length += item.getEncodedLength();
     }

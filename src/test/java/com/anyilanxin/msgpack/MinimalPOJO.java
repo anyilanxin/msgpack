@@ -23,6 +23,7 @@ public class MinimalPOJO extends UnpackedObject {
     private final LongProperty longProp = new LongProperty("longProp");
 
     public MinimalPOJO() {
+        super(1);
         declareProperty(longProp);
     }
 

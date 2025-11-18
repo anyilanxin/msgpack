@@ -16,9 +16,9 @@
  */
 package com.anyilanxin.msgpack.spec;
 
+import net.bytebuddy.utility.RandomString;
 import org.agrona.DirectBuffer;
 import org.agrona.concurrent.UnsafeBuffer;
-import org.assertj.core.internal.bytebuddy.utility.RandomString;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;

@@ -12,12 +12,11 @@
  */
 package com.anyilanxin.msgpack.value;
 
+import static com.anyilanxin.msgpack.spec.MsgPackWriter.getEncodedLongValueLength;
+
 import com.anyilanxin.msgpack.spec.MsgPackReader;
 import com.anyilanxin.msgpack.spec.MsgPackWriter;
-
 import java.util.Objects;
-
-import static com.anyilanxin.msgpack.spec.MsgPackWriter.getEncodedLongValueLength;
 
 /**
  * @author zxuanhong
@@ -61,7 +60,7 @@ public class EnumValue<E extends Enum<E>> extends BaseValue {
 
   @Override
   public int getEncodedLength() {
-      return getEncodedLongValueLength(value.ordinal());
+    return getEncodedLongValueLength(value.ordinal());
   }
 
   @Override

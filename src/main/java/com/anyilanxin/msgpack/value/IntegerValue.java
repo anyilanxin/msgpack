@@ -16,12 +16,11 @@
  */
 package com.anyilanxin.msgpack.value;
 
+import static com.anyilanxin.msgpack.spec.MsgPackWriter.getEncodedLongValueLength;
+
 import com.anyilanxin.msgpack.spec.MsgPackReader;
 import com.anyilanxin.msgpack.spec.MsgPackWriter;
-
 import java.util.Objects;
-
-import static com.anyilanxin.msgpack.spec.MsgPackWriter.getEncodedLongValueLength;
 
 public class IntegerValue extends BaseValue {
   protected int value;
@@ -30,12 +29,12 @@ public class IntegerValue extends BaseValue {
     this(0);
   }
 
-    public IntegerValue(final int initialValue) {
-        value = initialValue;
+  public IntegerValue(final int initialValue) {
+    value = initialValue;
   }
 
-    public void setValue(final int val) {
-        value = val;
+  public void setValue(final int val) {
+    value = val;
   }
 
   public int getValue() {
@@ -71,7 +70,7 @@ public class IntegerValue extends BaseValue {
 
   @Override
   public int getEncodedLength() {
-      return getEncodedLongValueLength(value);
+    return getEncodedLongValueLength(value);
   }
 
   @Override
@@ -80,7 +79,7 @@ public class IntegerValue extends BaseValue {
       return true;
     }
 
-      if (!(o instanceof final IntegerValue that)) {
+    if (!(o instanceof final IntegerValue that)) {
       return false;
     }
 

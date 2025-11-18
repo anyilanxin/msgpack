@@ -45,7 +45,7 @@ public class AllTypesDefaultValuesPOJO extends UnpackedObject {
         packedProp = new PackedProperty("packedProp", packedDefault);
         binaryProp = new BinaryProperty("binaryProp", binaryDefault);
         objectProp = new ObjectProperty<>("objectProp", objectDefault);
-
+        super(7);
         declareProperty(enumProp)
                 .declareProperty(longProp)
                 .declareProperty(intProp)
