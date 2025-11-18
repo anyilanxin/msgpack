@@ -25,7 +25,7 @@ plugins {
 apply from: rootProject.file('buildSrc/common-config.gradle')
 group = 'com.anyilanxin.msgpack'
 
-description = "Kunpeng Msgpack"
+description = "MessagePack is a binary serialization format"
 
 configure(jarInfo) {
 	archiveName = "msgpack"
