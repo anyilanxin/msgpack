@@ -20,7 +20,6 @@ import com.anyilanxin.msgpack.property.BaseProperty;
 import com.anyilanxin.msgpack.property.UndeclaredProperty;
 import com.anyilanxin.msgpack.spec.MsgPackReader;
 import com.anyilanxin.msgpack.spec.MsgPackWriter;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -197,8 +196,8 @@ public class ObjectValue extends BaseValue {
     }
     return length;
   }
-  
-    public boolean isEmpty() {
-        return declaredProperties.isEmpty() && undeclaredProperties.isEmpty();
-    }
+
+  public boolean isEmpty() {
+    return declaredProperties.isEmpty() && undeclaredProperties.isEmpty();
+  }
 }
