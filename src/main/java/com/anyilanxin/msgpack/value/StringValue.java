@@ -16,19 +16,21 @@
  */
 package com.anyilanxin.msgpack.value;
 
-import static com.anyilanxin.msgpack.util.BufferUtil.wrapString;
-
 import com.anyilanxin.msgpack.spec.MsgPackReader;
 import com.anyilanxin.msgpack.spec.MsgPackWriter;
-import java.util.Objects;
 import org.agrona.DirectBuffer;
 import org.agrona.MutableDirectBuffer;
 import org.agrona.concurrent.UnsafeBuffer;
 
+import java.util.Objects;
+
+import static com.anyilanxin.msgpack.spec.MsgPackWriter.getEncodedStringLength;
+import static com.anyilanxin.msgpack.util.BufferUtil.wrapString;
+
 public class StringValue extends BaseValue {
   public static final String EMPTY_STRING = "";
 
-  private MutableDirectBuffer bytes = new UnsafeBuffer(0, 0);
+    private final MutableDirectBuffer bytes = new UnsafeBuffer(0, 0);
   private int length;
   private int hashCode;
 
@@ -36,15 +38,15 @@ public class StringValue extends BaseValue {
     this(EMPTY_STRING);
   }
 
-  public StringValue(String string) {
+    public StringValue(final String string) {
     this(wrapString(string));
   }
 
-  public StringValue(DirectBuffer buffer) {
+    public StringValue(final DirectBuffer buffer) {
     this(buffer, 0, buffer.capacity());
   }
 
-  public StringValue(DirectBuffer buffer, int offset, int length) {
+    public StringValue(final DirectBuffer buffer, final int offset, final int length) {
     wrap(buffer, offset, length);
   }
 
@@ -55,28 +57,28 @@ public class StringValue extends BaseValue {
     hashCode = 0;
   }
 
-  public void wrap(byte[] bytes) {
+    public void wrap(final byte[] bytes) {
     this.bytes.wrap(bytes);
-    this.length = bytes.length;
-    this.hashCode = 0;
+        length = bytes.length;
+        hashCode = 0;
   }
 
-  public void wrap(DirectBuffer buff) {
+    public void wrap(final DirectBuffer buff) {
     wrap(buff, 0, buff.capacity());
   }
 
-  public void wrap(DirectBuffer buff, int offset, int length) {
+    public void wrap(final DirectBuffer buff, final int offset, final int length) {
     if (length == 0) {
-      this.bytes.wrap(0, 0);
+        bytes.wrap(0, 0);
     } else {
-      this.bytes.wrap(buff, offset, length);
+        bytes.wrap(buff, offset, length);
     }
     this.length = length;
-    this.hashCode = 0;
+        hashCode = 0;
   }
 
-  public void wrap(StringValue anotherString) {
-    this.wrap(anotherString.getValue());
+    public void wrap(final StringValue anotherString) {
+        wrap(anotherString.getValue());
   }
 
   public int getLength() {
@@ -88,7 +90,7 @@ public class StringValue extends BaseValue {
   }
 
   @Override
-  public void writeJSON(StringBuilder builder) {
+  public void writeJSON(final StringBuilder builder) {
     builder.append("\"");
     builder.append(toString());
     builder.append("\"");
@@ -100,33 +102,33 @@ public class StringValue extends BaseValue {
   }
 
   @Override
-  public void read(MsgPackReader reader) {
+  public void read(final MsgPackReader reader) {
     final DirectBuffer buffer = reader.getBuffer();
     final int stringLength = reader.readStringLength();
     final int offset = reader.getOffset();
 
     reader.skipBytes(stringLength);
 
-    this.wrap(buffer, offset, stringLength);
+      wrap(buffer, offset, stringLength);
   }
 
   @Override
-  public void write(MsgPackWriter writer) {
+  public void write(final MsgPackWriter writer) {
     writer.writeString(bytes);
   }
 
   @Override
   public int getEncodedLength() {
-    return MsgPackWriter.getEncodedStringLength(length);
+      return getEncodedStringLength(length);
   }
 
   @Override
-  public boolean equals(Object o) {
+  public boolean equals(final Object o) {
     if (this == o) {
       return true;
     }
 
-    if (!(o instanceof StringValue that)) {
+      if (!(o instanceof final StringValue that)) {
       return false;
     }
 

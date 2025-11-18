@@ -14,6 +14,9 @@ package com.anyilanxin.msgpack.property;
 
 import com.anyilanxin.msgpack.value.EnumValue;
 
+/**
+ * @author zxuanhong
+ */
 public class EnumProperty<E extends Enum<E>> extends BaseProperty<EnumValue<E>> {
   public EnumProperty(final String key, final Class<E> type) {
     super(key, new EnumValue<>(type));

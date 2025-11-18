@@ -14,6 +14,9 @@ package com.anyilanxin.msgpack.property;
 
 import com.anyilanxin.msgpack.value.ShortValue;
 
+/**
+ * @author zxuanhong
+ */
 public class ShortProperty extends BaseProperty<ShortValue> {
   public ShortProperty(final String key) {
     super(key, new ShortValue());

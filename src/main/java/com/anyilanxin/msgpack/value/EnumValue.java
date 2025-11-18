@@ -14,8 +14,14 @@ package com.anyilanxin.msgpack.value;
 
 import com.anyilanxin.msgpack.spec.MsgPackReader;
 import com.anyilanxin.msgpack.spec.MsgPackWriter;
+
 import java.util.Objects;
 
+import static com.anyilanxin.msgpack.spec.MsgPackWriter.getEncodedLongValueLength;
+
+/**
+ * @author zxuanhong
+ */
 public class EnumValue<E extends Enum<E>> extends BaseValue {
   private final IntegerValue decodedValue = new IntegerValue();
   private final IntegerValue[] binaryEnumValues;
@@ -55,7 +61,7 @@ public class EnumValue<E extends Enum<E>> extends BaseValue {
 
   @Override
   public int getEncodedLength() {
-    return MsgPackWriter.getEncodedLongValueLength(value.ordinal());
+      return getEncodedLongValueLength(value.ordinal());
   }
 
   @Override

@@ -14,8 +14,14 @@ package com.anyilanxin.msgpack.value;
 
 import com.anyilanxin.msgpack.spec.MsgPackReader;
 import com.anyilanxin.msgpack.spec.MsgPackWriter;
+
 import java.util.Objects;
 
+import static com.anyilanxin.msgpack.spec.MsgPackWriter.getEncodedLongValueLength;
+
+/**
+ * @author zxuanhong
+ */
 public class ByteValue extends BaseValue {
   protected byte value;
 
@@ -57,7 +63,7 @@ public class ByteValue extends BaseValue {
 
   @Override
   public int getEncodedLength() {
-    return MsgPackWriter.getEncodedLongValueLength(value);
+      return getEncodedLongValueLength(value);
   }
 
   @Override

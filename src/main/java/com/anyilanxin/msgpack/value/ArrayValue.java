@@ -18,8 +18,11 @@ package com.anyilanxin.msgpack.value;
 
 import com.anyilanxin.msgpack.spec.MsgPackReader;
 import com.anyilanxin.msgpack.spec.MsgPackWriter;
+
 import java.util.*;
 import java.util.function.Supplier;
+
+import static com.anyilanxin.msgpack.spec.MsgPackWriter.getEncodedArrayHeaderLenght;
 
 public class ArrayValue<T extends BaseValue> extends BaseValue
     implements Iterable<T>, RandomAccess {
@@ -84,7 +87,7 @@ public class ArrayValue<T extends BaseValue> extends BaseValue
 
   @Override
   public int getEncodedLength() {
-    int length = MsgPackWriter.getEncodedArrayHeaderLenght(items.size());
+      int length = getEncodedArrayHeaderLenght(items.size());
     for (final T item : items) {
       length += item.getEncodedLength();
     }

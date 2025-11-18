@@ -18,7 +18,10 @@ package com.anyilanxin.msgpack.value;
 
 import com.anyilanxin.msgpack.spec.MsgPackReader;
 import com.anyilanxin.msgpack.spec.MsgPackWriter;
+
 import java.util.Objects;
+
+import static com.anyilanxin.msgpack.spec.MsgPackWriter.getEncodedBooleanValueLength;
 
 public class BooleanValue extends BaseValue {
   private boolean val = false;
@@ -27,8 +30,8 @@ public class BooleanValue extends BaseValue {
     this(false);
   }
 
-  public BooleanValue(boolean initialValue) {
-    this.val = initialValue;
+    public BooleanValue(final boolean initialValue) {
+        val = initialValue;
   }
 
   @Override
@@ -40,32 +43,32 @@ public class BooleanValue extends BaseValue {
     return val;
   }
 
-  public void setValue(boolean value) {
-    this.val = value;
+    public void setValue(final boolean value) {
+        val = value;
   }
 
   @Override
-  public void writeJSON(StringBuilder builder) {
+  public void writeJSON(final StringBuilder builder) {
     builder.append(val);
   }
 
   @Override
-  public void write(MsgPackWriter writer) {
+  public void write(final MsgPackWriter writer) {
     writer.writeBoolean(val);
   }
 
   @Override
-  public void read(MsgPackReader reader) {
+  public void read(final MsgPackReader reader) {
     val = reader.readBoolean();
   }
 
   @Override
   public int getEncodedLength() {
-    return MsgPackWriter.getEncodedBooleanValueLength();
+      return getEncodedBooleanValueLength();
   }
 
   @Override
-  public boolean equals(Object o) {
+  public boolean equals(final Object o) {
     if (this == o) {
       return true;
     }

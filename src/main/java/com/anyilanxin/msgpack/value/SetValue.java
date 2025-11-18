@@ -14,12 +14,18 @@ package com.anyilanxin.msgpack.value;
 
 import com.anyilanxin.msgpack.spec.MsgPackReader;
 import com.anyilanxin.msgpack.spec.MsgPackWriter;
+
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
+import static com.anyilanxin.msgpack.spec.MsgPackWriter.getEncodedArrayHeaderLenght;
+
+/**
+ * @author zxuanhong
+ */
 public final class SetValue<T extends BaseValue> extends BaseValue {
   private final Set<T> set;
   private final Supplier<T> valueFactory;
@@ -82,7 +88,7 @@ public final class SetValue<T extends BaseValue> extends BaseValue {
 
   @Override
   public int getEncodedLength() {
-    int length = MsgPackWriter.getEncodedArrayHeaderLenght(set.size());
+      int length = getEncodedArrayHeaderLenght(set.size());
     for (final T item : set) {
       length += item.getEncodedLength();
     }

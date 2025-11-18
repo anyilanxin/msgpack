@@ -14,6 +14,9 @@ package com.anyilanxin.msgpack.property;
 
 import com.anyilanxin.msgpack.value.FloatValue;
 
+/**
+ * @author zxuanhong
+ */
 public class FloatProperty extends BaseProperty<FloatValue> {
   public FloatProperty(final String key) {
     super(key, new FloatValue());

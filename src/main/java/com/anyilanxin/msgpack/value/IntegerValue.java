@@ -18,7 +18,10 @@ package com.anyilanxin.msgpack.value;
 
 import com.anyilanxin.msgpack.spec.MsgPackReader;
 import com.anyilanxin.msgpack.spec.MsgPackWriter;
+
 import java.util.Objects;
+
+import static com.anyilanxin.msgpack.spec.MsgPackWriter.getEncodedLongValueLength;
 
 public class IntegerValue extends BaseValue {
   protected int value;
@@ -27,12 +30,12 @@ public class IntegerValue extends BaseValue {
     this(0);
   }
 
-  public IntegerValue(int initialValue) {
-    this.value = initialValue;
+    public IntegerValue(final int initialValue) {
+        value = initialValue;
   }
 
-  public void setValue(int val) {
-    this.value = val;
+    public void setValue(final int val) {
+        value = val;
   }
 
   public int getValue() {
@@ -45,17 +48,17 @@ public class IntegerValue extends BaseValue {
   }
 
   @Override
-  public void writeJSON(StringBuilder builder) {
+  public void writeJSON(final StringBuilder builder) {
     builder.append(value);
   }
 
   @Override
-  public void write(MsgPackWriter writer) {
+  public void write(final MsgPackWriter writer) {
     writer.writeInteger(value);
   }
 
   @Override
-  public void read(MsgPackReader reader) {
+  public void read(final MsgPackReader reader) {
     final long longValue = reader.readInteger();
 
     if (longValue < Integer.MIN_VALUE || longValue > Integer.MAX_VALUE) {
@@ -68,16 +71,16 @@ public class IntegerValue extends BaseValue {
 
   @Override
   public int getEncodedLength() {
-    return MsgPackWriter.getEncodedLongValueLength(value);
+      return getEncodedLongValueLength(value);
   }
 
   @Override
-  public boolean equals(Object o) {
+  public boolean equals(final Object o) {
     if (this == o) {
       return true;
     }
 
-    if (!(o instanceof IntegerValue that)) {
+      if (!(o instanceof final IntegerValue that)) {
       return false;
     }
 

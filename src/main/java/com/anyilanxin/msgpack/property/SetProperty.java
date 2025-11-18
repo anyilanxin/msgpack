@@ -15,9 +15,13 @@ package com.anyilanxin.msgpack.property;
 import com.anyilanxin.msgpack.value.BaseValue;
 import com.anyilanxin.msgpack.value.SetValue;
 import com.anyilanxin.msgpack.value.StringValue;
+
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
+/**
+ * @author zxuanhong
+ */
 public final class SetProperty<T extends BaseValue> extends BaseProperty<SetValue<T>> {
   public SetProperty(final String keyString, final Supplier<T> valueFactory) {
     super(keyString, new SetValue<>(valueFactory));

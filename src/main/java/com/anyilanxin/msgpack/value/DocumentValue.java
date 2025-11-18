@@ -16,26 +16,28 @@
  */
 package com.anyilanxin.msgpack.value;
 
-import com.anyilanxin.msgpack.spec.MsgPackCodes;
 import com.anyilanxin.msgpack.spec.MsgPackFormat;
-import com.anyilanxin.msgpack.spec.MsgPackHelper;
-import com.anyilanxin.msgpack.spec.MsgPackType;
 import org.agrona.DirectBuffer;
 import org.agrona.concurrent.UnsafeBuffer;
 
+import static com.anyilanxin.msgpack.spec.MsgPackCodes.NIL;
+import static com.anyilanxin.msgpack.spec.MsgPackFormat.valueOf;
+import static com.anyilanxin.msgpack.spec.MsgPackHelper.EMTPY_OBJECT;
+import static com.anyilanxin.msgpack.spec.MsgPackType.MAP;
+
 public class DocumentValue extends BinaryValue {
-  public static final DirectBuffer EMPTY_DOCUMENT = new UnsafeBuffer(MsgPackHelper.EMTPY_OBJECT);
+    public static final DirectBuffer EMPTY_DOCUMENT = new UnsafeBuffer(EMTPY_OBJECT);
 
   public DocumentValue() {}
 
-  public DocumentValue(DirectBuffer initialValue, int offset, int length) {
+    public DocumentValue(final DirectBuffer initialValue, final int offset, final int length) {
     super(initialValue, offset, length);
   }
 
   @Override
   public void wrap(DirectBuffer buff, int offset, int length) {
     final boolean documentIsNil =
-        length == 0 || (length == 1 && buff.getByte(offset) == MsgPackCodes.NIL);
+            length == 0 || (length == 1 && buff.getByte(offset) == NIL);
 
     if (documentIsNil) {
       buff = EMPTY_DOCUMENT;
@@ -44,8 +46,8 @@ public class DocumentValue extends BinaryValue {
     }
 
     final byte firstByte = buff.getByte(offset);
-    final MsgPackFormat format = MsgPackFormat.valueOf(firstByte);
-    final boolean isValid = format.getType() == MsgPackType.MAP;
+      final MsgPackFormat format = valueOf(firstByte);
+      final boolean isValid = format.getType() == MAP;
 
     if (!isValid) {
       throw new IllegalArgumentException(

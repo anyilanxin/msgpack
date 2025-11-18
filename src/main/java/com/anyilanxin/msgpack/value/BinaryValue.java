@@ -18,12 +18,15 @@ package com.anyilanxin.msgpack.value;
 
 import com.anyilanxin.msgpack.spec.MsgPackReader;
 import com.anyilanxin.msgpack.spec.MsgPackWriter;
-import java.nio.charset.StandardCharsets;
-import java.util.Base64;
-import java.util.Objects;
 import org.agrona.DirectBuffer;
 import org.agrona.MutableDirectBuffer;
 import org.agrona.concurrent.UnsafeBuffer;
+
+import java.nio.charset.StandardCharsets;
+import java.util.Base64;
+import java.util.Objects;
+
+import static com.anyilanxin.msgpack.spec.MsgPackWriter.getEncodedBinaryValueLength;
 
 public class BinaryValue extends BaseValue {
   private final MutableDirectBuffer data = new UnsafeBuffer(0, 0);
@@ -31,7 +34,7 @@ public class BinaryValue extends BaseValue {
 
   public BinaryValue() {}
 
-  public BinaryValue(DirectBuffer initialValue, int offset, int length) {
+    public BinaryValue(final DirectBuffer initialValue, final int offset, final int length) {
     wrap(initialValue, offset, length);
   }
 
@@ -41,21 +44,21 @@ public class BinaryValue extends BaseValue {
     length = 0;
   }
 
-  public void wrap(DirectBuffer buff) {
+    public void wrap(final DirectBuffer buff) {
     wrap(buff, 0, buff.capacity());
   }
 
-  public void wrap(DirectBuffer buff, int offset, int length) {
+    public void wrap(final DirectBuffer buff, final int offset, final int length) {
     if (length == 0) {
-      this.data.wrap(0, 0);
+        data.wrap(0, 0);
     } else {
-      this.data.wrap(buff, offset, length);
+        data.wrap(buff, offset, length);
     }
     this.length = length;
   }
 
-  public void wrap(StringValue decodedKey) {
-    this.wrap(decodedKey.getValue());
+    public void wrap(final StringValue decodedKey) {
+        wrap(decodedKey.getValue());
   }
 
   public DirectBuffer getValue() {
@@ -63,7 +66,7 @@ public class BinaryValue extends BaseValue {
   }
 
   @Override
-  public void writeJSON(StringBuilder builder) {
+  public void writeJSON(final StringBuilder builder) {
     final byte[] bytes = new byte[length];
     data.getBytes(0, bytes);
 
@@ -73,28 +76,28 @@ public class BinaryValue extends BaseValue {
   }
 
   @Override
-  public void write(MsgPackWriter writer) {
+  public void write(final MsgPackWriter writer) {
     writer.writeBinary(data);
   }
 
   @Override
-  public void read(MsgPackReader reader) {
+  public void read(final MsgPackReader reader) {
     final DirectBuffer buffer = reader.getBuffer();
     final int stringLength = reader.readBinaryLength();
     final int offset = reader.getOffset();
 
     reader.skipBytes(stringLength);
 
-    this.wrap(buffer, offset, stringLength);
+      wrap(buffer, offset, stringLength);
   }
 
   @Override
   public int getEncodedLength() {
-    return MsgPackWriter.getEncodedBinaryValueLength(length);
+      return getEncodedBinaryValueLength(length);
   }
 
   @Override
-  public boolean equals(Object o) {
+  public boolean equals(final Object o) {
     if (this == o) {
       return true;
     }

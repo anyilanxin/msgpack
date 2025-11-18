@@ -14,6 +14,9 @@ package com.anyilanxin.msgpack.property;
 
 import com.anyilanxin.msgpack.value.ByteValue;
 
+/**
+ * @author zxuanhong
+ */
 public class ByteProperty extends BaseProperty<ByteValue> {
   public ByteProperty(final String key) {
     super(key, new ByteValue());

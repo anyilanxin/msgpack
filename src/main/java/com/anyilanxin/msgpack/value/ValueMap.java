@@ -15,6 +15,9 @@ package com.anyilanxin.msgpack.value;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
+/**
+ * @author zxuanhong
+ */
 public interface ValueMap<K, V> {
   void put(final Consumer<K> key, final Consumer<V> value);
 
