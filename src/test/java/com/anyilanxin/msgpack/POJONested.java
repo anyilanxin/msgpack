@@ -1,5 +1,6 @@
 /*
  * Copyright © 2017 camunda services GmbH (info@camunda.com)
+ * Copyright © 2025 anyilanxin zxh(anyilanxin@aliyun.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,15 +22,15 @@ public class POJONested extends UnpackedObject {
     private final LongProperty longProp = new LongProperty("foo", -1L);
 
     public POJONested() {
-        this.declareProperty(longProp);
+        declareProperty(longProp);
     }
 
-    public POJONested setLong(long value) {
-        this.longProp.setValue(value);
+    public POJONested setLong(final long value) {
+        longProp.setValue(value);
         return this;
     }
 
     public long getLong() {
-        return this.longProp.getValue();
+        return longProp.getValue();
     }
 }

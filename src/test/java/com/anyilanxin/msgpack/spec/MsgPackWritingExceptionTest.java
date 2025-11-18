@@ -1,5 +1,6 @@
 /*
  * Copyright © 2017 camunda services GmbH (info@camunda.com)
+ * Copyright © 2025 anyilanxin zxh(anyilanxin@aliyun.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,9 +18,6 @@ package com.anyilanxin.msgpack.spec;
 
 import com.anyilanxin.msgpack.execption.MsgpackWriterException;
 import com.anyilanxin.msgpack.spec.MsgPackUtil.CheckedConsumer;
-
-import java.util.Arrays;
-
 import org.agrona.MutableDirectBuffer;
 import org.agrona.concurrent.UnsafeBuffer;
 import org.junit.Before;
@@ -30,6 +28,8 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameter;
 import org.junit.runners.Parameterized.Parameters;
+
+import java.util.Arrays;
 
 @RunWith(Parameterized.class)
 public class MsgPackWritingExceptionTest {
@@ -80,7 +80,7 @@ public class MsgPackWritingExceptionTest {
     }
 
     protected static CheckedConsumer<MsgPackWriter> codeUnderTest(
-            CheckedConsumer<MsgPackWriter> arg) {
+            final CheckedConsumer<MsgPackWriter> arg) {
         return arg;
     }
 }

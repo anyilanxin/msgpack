@@ -1,5 +1,6 @@
 /*
  * Copyright © 2017 camunda services GmbH (info@camunda.com)
+ * Copyright © 2025 anyilanxin zxh(anyilanxin@aliyun.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,16 +16,6 @@
  */
 package com.anyilanxin.msgpack.spec;
 
-import static com.anyilanxin.msgpack.spec.MsgPackCodes.ARRAY32;
-import static com.anyilanxin.msgpack.spec.MsgPackCodes.BIN32;
-import static com.anyilanxin.msgpack.spec.MsgPackCodes.FIXSTR_PREFIX;
-import static com.anyilanxin.msgpack.spec.MsgPackCodes.MAP32;
-import static com.anyilanxin.msgpack.spec.MsgPackCodes.STR32;
-import static com.anyilanxin.msgpack.spec.MsgPackCodes.UINT64;
-
-import java.util.Arrays;
-import java.util.function.Consumer;
-
 import com.anyilanxin.msgpack.execption.MsgpackReaderException;
 import org.agrona.DirectBuffer;
 import org.agrona.concurrent.UnsafeBuffer;
@@ -36,6 +27,11 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameter;
 import org.junit.runners.Parameterized.Parameters;
+
+import java.util.Arrays;
+import java.util.function.Consumer;
+
+import static com.anyilanxin.msgpack.spec.MsgPackCodes.*;
 
 @RunWith(Parameterized.class)
 public class MsgPackReadingBoundaryCheckingExceptionTest {
@@ -123,7 +119,7 @@ public class MsgPackReadingBoundaryCheckingExceptionTest {
         codeUnderTest.accept(reader);
     }
 
-    protected static Consumer<MsgPackReader> codeUnderTest(Consumer<MsgPackReader> arg) {
+    protected static Consumer<MsgPackReader> codeUnderTest(final Consumer<MsgPackReader> arg) {
         return arg;
     }
 }

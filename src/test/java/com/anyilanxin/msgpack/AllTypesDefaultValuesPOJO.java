@@ -1,5 +1,6 @@
 /*
  * Copyright © 2017 camunda services GmbH (info@camunda.com)
+ * Copyright © 2025 anyilanxin zxh(anyilanxin@aliyun.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,13 +17,7 @@
 package com.anyilanxin.msgpack;
 
 import com.anyilanxin.msgpack.POJO.POJOEnum;
-import com.anyilanxin.msgpack.property.BinaryProperty;
-import com.anyilanxin.msgpack.property.EnumProperty;
-import com.anyilanxin.msgpack.property.IntegerProperty;
-import com.anyilanxin.msgpack.property.LongProperty;
-import com.anyilanxin.msgpack.property.ObjectProperty;
-import com.anyilanxin.msgpack.property.PackedProperty;
-import com.anyilanxin.msgpack.property.StringProperty;
+import com.anyilanxin.msgpack.property.*;
 import org.agrona.DirectBuffer;
 
 public class AllTypesDefaultValuesPOJO extends UnpackedObject {
@@ -36,13 +31,13 @@ public class AllTypesDefaultValuesPOJO extends UnpackedObject {
     private final ObjectProperty<POJONested> objectProp;
 
     public AllTypesDefaultValuesPOJO(
-            POJOEnum enumDefault,
-            long longDefault,
-            int intDefault,
-            String stringDefault,
-            DirectBuffer packedDefault,
-            DirectBuffer binaryDefault,
-            POJONested objectDefault) {
+            final POJOEnum enumDefault,
+            final long longDefault,
+            final int intDefault,
+            final String stringDefault,
+            final DirectBuffer packedDefault,
+            final DirectBuffer binaryDefault,
+            final POJONested objectDefault) {
         enumProp = new EnumProperty<>("enumProp", POJOEnum.class, enumDefault);
         longProp = new LongProperty("longProp", longDefault);
         intProp = new IntegerProperty("intProp", intDefault);
@@ -51,7 +46,7 @@ public class AllTypesDefaultValuesPOJO extends UnpackedObject {
         binaryProp = new BinaryProperty("binaryProp", binaryDefault);
         objectProp = new ObjectProperty<>("objectProp", objectDefault);
 
-        this.declareProperty(enumProp)
+        declareProperty(enumProp)
                 .declareProperty(longProp)
                 .declareProperty(intProp)
                 .declareProperty(stringProp)

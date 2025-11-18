@@ -1,5 +1,6 @@
 /*
  * Copyright © 2017 camunda services GmbH (info@camunda.com)
+ * Copyright © 2025 anyilanxin zxh(anyilanxin@aliyun.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,35 +16,32 @@
  */
 package com.anyilanxin.msgpack;
 
-import static com.anyilanxin.msgpack.MsgPackUtil.encodeMsgPack;
-import static io.zeebe.util.buffer.BufferUtil.wrapString;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.catchThrowable;
-import static org.assertj.core.api.Assertions.entry;
-
 import com.anyilanxin.msgpack.execption.MsgpackPropertyException;
 import com.anyilanxin.msgpack.property.DocumentProperty;
 import com.anyilanxin.msgpack.spec.MsgPackHelper;
-
-import java.util.Map;
-
 import org.agrona.DirectBuffer;
 import org.agrona.concurrent.UnsafeBuffer;
 import org.junit.Test;
+
+import java.util.Map;
+
+import static com.anyilanxin.msgpack.MsgPackUtil.encodeMsgPack;
+import static io.zeebe.util.buffer.BufferUtil.wrapString;
+import static org.assertj.core.api.Assertions.*;
 
 public class DocumentPropertyTest {
     private class Document extends UnpackedObject {
         private final DocumentProperty documentProperty = new DocumentProperty("documentProp");
 
         Document() {
-            this.declareProperty(documentProperty);
+            declareProperty(documentProperty);
         }
 
         public DirectBuffer getDocument() {
             return documentProperty.getValue();
         }
 
-        public void setDocument(DirectBuffer document) {
+        public void setDocument(final DirectBuffer document) {
             documentProperty.setValue(document);
         }
     }

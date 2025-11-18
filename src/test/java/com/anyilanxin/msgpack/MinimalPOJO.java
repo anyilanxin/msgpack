@@ -1,5 +1,6 @@
 /*
  * Copyright © 2017 camunda services GmbH (info@camunda.com)
+ * Copyright © 2025 anyilanxin zxh(anyilanxin@aliyun.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,7 +23,7 @@ public class MinimalPOJO extends UnpackedObject {
     private final LongProperty longProp = new LongProperty("longProp");
 
     public MinimalPOJO() {
-        this.declareProperty(longProp);
+        declareProperty(longProp);
     }
 
     public long getLongProp() {
@@ -30,6 +31,6 @@ public class MinimalPOJO extends UnpackedObject {
     }
 
     public void setLongProp(final long value) {
-        this.longProp.setValue(value);
+        longProp.setValue(value);
     }
 }

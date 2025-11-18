@@ -1,5 +1,6 @@
 /*
  * Copyright © 2017 camunda services GmbH (info@camunda.com)
+ * Copyright © 2025 anyilanxin zxh(anyilanxin@aliyun.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,25 +23,25 @@ public class DefaultValuesPOJO extends UnpackedObject {
     protected LongProperty defaultValueProperty;
     protected LongProperty noDefaultValueProperty = new LongProperty("noDefaultValueProp");
 
-    public DefaultValuesPOJO(long defaultValue) {
+    public DefaultValuesPOJO(final long defaultValue) {
         defaultValueProperty = new LongProperty("defaultValueProp", defaultValue);
 
-        this.declareProperty(defaultValueProperty).declareProperty(noDefaultValueProperty);
+        declareProperty(defaultValueProperty).declareProperty(noDefaultValueProperty);
     }
 
     public long getDefaultValueProperty() {
         return defaultValueProperty.getValue();
     }
 
-    public void setDefaultValueProperty(long value) {
-        this.defaultValueProperty.setValue(value);
+    public void setDefaultValueProperty(final long value) {
+        defaultValueProperty.setValue(value);
     }
 
     public long getNoDefaultValueProperty() {
         return noDefaultValueProperty.getValue();
     }
 
-    public void setNoDefaultValueProperty(long value) {
-        this.noDefaultValueProperty.setValue(value);
+    public void setNoDefaultValueProperty(final long value) {
+        noDefaultValueProperty.setValue(value);
     }
 }

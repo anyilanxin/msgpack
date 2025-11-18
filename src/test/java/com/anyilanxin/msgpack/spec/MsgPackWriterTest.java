@@ -1,5 +1,6 @@
 /*
  * Copyright © 2017 camunda services GmbH (info@camunda.com)
+ * Copyright © 2025 anyilanxin zxh(anyilanxin@aliyun.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,15 +16,7 @@
  */
 package com.anyilanxin.msgpack.spec;
 
-import static com.anyilanxin.msgpack.spec.MsgPackUtil.toByte;
-import static io.zeebe.test.util.BufferAssert.assertThatBuffer;
-import static org.assertj.core.api.Assertions.assertThat;
-
 import com.anyilanxin.msgpack.spec.MsgPackUtil.CheckedConsumer;
-
-import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
-
 import org.agrona.DirectBuffer;
 import org.agrona.MutableDirectBuffer;
 import org.agrona.concurrent.UnsafeBuffer;
@@ -33,6 +26,13 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameter;
 import org.junit.runners.Parameterized.Parameters;
+
+import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
+
+import static com.anyilanxin.msgpack.spec.MsgPackUtil.toByte;
+import static io.zeebe.test.util.BufferAssert.assertThatBuffer;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(Parameterized.class)
 public class MsgPackWriterTest {
@@ -201,23 +201,23 @@ public class MsgPackWriterTest {
     }
 
     // helping the compiler with recognizing lamdas
-    protected static CheckedConsumer<ByteArrayBuilder> expect(CheckedConsumer<ByteArrayBuilder> arg) {
+    protected static CheckedConsumer<ByteArrayBuilder> expect(final CheckedConsumer<ByteArrayBuilder> arg) {
         return arg;
     }
 
-    protected static CheckedConsumer<MsgPackWriter> actual(CheckedConsumer<MsgPackWriter> arg) {
+    protected static CheckedConsumer<MsgPackWriter> actual(final CheckedConsumer<MsgPackWriter> arg) {
         return arg;
     }
 
-    protected static long longOfLength(int bits) {
+    protected static long longOfLength(final int bits) {
         return 1L << (bits - 1);
     }
 
-    protected static DirectBuffer toBuffer(String value) {
+    protected static DirectBuffer toBuffer(final String value) {
         return new UnsafeBuffer(value.getBytes(StandardCharsets.UTF_8));
     }
 
-    protected static byte[] utf8(String value) {
+    protected static byte[] utf8(final String value) {
         return value.getBytes(StandardCharsets.UTF_8);
     }
 }

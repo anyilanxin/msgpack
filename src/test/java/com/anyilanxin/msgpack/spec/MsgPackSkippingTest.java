@@ -1,5 +1,6 @@
 /*
  * Copyright © 2017 camunda services GmbH (info@camunda.com)
+ * Copyright © 2025 anyilanxin zxh(anyilanxin@aliyun.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,45 +16,6 @@
  */
 package com.anyilanxin.msgpack.spec;
 
-import static com.anyilanxin.msgpack.spec.MsgPackCodes.ARRAY16;
-import static com.anyilanxin.msgpack.spec.MsgPackCodes.ARRAY32;
-import static com.anyilanxin.msgpack.spec.MsgPackCodes.BIN16;
-import static com.anyilanxin.msgpack.spec.MsgPackCodes.BIN32;
-import static com.anyilanxin.msgpack.spec.MsgPackCodes.BIN8;
-import static com.anyilanxin.msgpack.spec.MsgPackCodes.EXT16;
-import static com.anyilanxin.msgpack.spec.MsgPackCodes.EXT32;
-import static com.anyilanxin.msgpack.spec.MsgPackCodes.EXT8;
-import static com.anyilanxin.msgpack.spec.MsgPackCodes.FALSE;
-import static com.anyilanxin.msgpack.spec.MsgPackCodes.FIXEXT1;
-import static com.anyilanxin.msgpack.spec.MsgPackCodes.FIXEXT16;
-import static com.anyilanxin.msgpack.spec.MsgPackCodes.FIXEXT2;
-import static com.anyilanxin.msgpack.spec.MsgPackCodes.FIXEXT4;
-import static com.anyilanxin.msgpack.spec.MsgPackCodes.FIXEXT8;
-import static com.anyilanxin.msgpack.spec.MsgPackCodes.FLOAT32;
-import static com.anyilanxin.msgpack.spec.MsgPackCodes.FLOAT64;
-import static com.anyilanxin.msgpack.spec.MsgPackCodes.INT16;
-import static com.anyilanxin.msgpack.spec.MsgPackCodes.INT32;
-import static com.anyilanxin.msgpack.spec.MsgPackCodes.INT64;
-import static com.anyilanxin.msgpack.spec.MsgPackCodes.INT8;
-import static com.anyilanxin.msgpack.spec.MsgPackCodes.MAP16;
-import static com.anyilanxin.msgpack.spec.MsgPackCodes.MAP32;
-import static com.anyilanxin.msgpack.spec.MsgPackCodes.NEGFIXINT_PREFIX;
-import static com.anyilanxin.msgpack.spec.MsgPackCodes.NIL;
-import static com.anyilanxin.msgpack.spec.MsgPackCodes.STR16;
-import static com.anyilanxin.msgpack.spec.MsgPackCodes.STR32;
-import static com.anyilanxin.msgpack.spec.MsgPackCodes.STR8;
-import static com.anyilanxin.msgpack.spec.MsgPackCodes.TRUE;
-import static com.anyilanxin.msgpack.spec.MsgPackCodes.UINT16;
-import static com.anyilanxin.msgpack.spec.MsgPackCodes.UINT32;
-import static com.anyilanxin.msgpack.spec.MsgPackCodes.UINT64;
-import static com.anyilanxin.msgpack.spec.MsgPackCodes.UINT8;
-import static com.anyilanxin.msgpack.spec.MsgPackUtil.toByte;
-import static org.assertj.core.api.Assertions.assertThat;
-
-import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
-import java.util.function.Consumer;
-
 import org.agrona.DirectBuffer;
 import org.agrona.concurrent.UnsafeBuffer;
 import org.assertj.core.internal.bytebuddy.utility.RandomString;
@@ -62,6 +24,14 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameter;
 import org.junit.runners.Parameterized.Parameters;
+
+import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
+import java.util.function.Consumer;
+
+import static com.anyilanxin.msgpack.spec.MsgPackCodes.*;
+import static com.anyilanxin.msgpack.spec.MsgPackUtil.toByte;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(Parameterized.class)
 public class MsgPackSkippingTest {
@@ -235,7 +205,7 @@ public class MsgPackSkippingTest {
     @Parameter(1)
     public Consumer<ByteArrayBuilder> given;
 
-    protected static Consumer<ByteArrayBuilder> given(Consumer<ByteArrayBuilder> arg) {
+    protected static Consumer<ByteArrayBuilder> given(final Consumer<ByteArrayBuilder> arg) {
         return arg;
     }
 
@@ -257,7 +227,7 @@ public class MsgPackSkippingTest {
         assertThat(reader.getOffset()).isEqualTo(buffer.capacity());
     }
 
-    protected static byte[] utf8(String value) {
+    protected static byte[] utf8(final String value) {
         return value.getBytes(StandardCharsets.UTF_8);
     }
 }

@@ -1,5 +1,6 @@
 /*
  * Copyright © 2017 camunda services GmbH (info@camunda.com)
+ * Copyright © 2025 anyilanxin zxh(anyilanxin@aliyun.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,21 +16,6 @@
  */
 package com.anyilanxin.msgpack.spec;
 
-import static com.anyilanxin.msgpack.spec.MsgPackType.ARRAY;
-import static com.anyilanxin.msgpack.spec.MsgPackType.BINARY;
-import static com.anyilanxin.msgpack.spec.MsgPackType.BOOLEAN;
-import static com.anyilanxin.msgpack.spec.MsgPackType.FLOAT;
-import static com.anyilanxin.msgpack.spec.MsgPackType.INTEGER;
-import static com.anyilanxin.msgpack.spec.MsgPackType.MAP;
-import static com.anyilanxin.msgpack.spec.MsgPackType.NIL;
-import static com.anyilanxin.msgpack.spec.MsgPackType.STRING;
-import static com.anyilanxin.msgpack.spec.MsgPackUtil.toByte;
-import static io.zeebe.test.util.BufferAssert.assertThatBuffer;
-import static org.assertj.core.api.Assertions.assertThat;
-
-import java.util.Arrays;
-import java.util.function.Consumer;
-
 import org.agrona.DirectBuffer;
 import org.agrona.concurrent.UnsafeBuffer;
 import org.junit.Test;
@@ -37,6 +23,14 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameter;
 import org.junit.runners.Parameterized.Parameters;
+
+import java.util.Arrays;
+import java.util.function.Consumer;
+
+import static com.anyilanxin.msgpack.spec.MsgPackType.*;
+import static com.anyilanxin.msgpack.spec.MsgPackUtil.toByte;
+import static io.zeebe.test.util.BufferAssert.assertThatBuffer;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(Parameterized.class)
 public class MsgPackReadTokenTest {
@@ -248,11 +242,11 @@ public class MsgPackReadTokenTest {
         assertion.accept(msgPackToken);
     }
 
-    protected static Consumer<ByteArrayBuilder> given(Consumer<ByteArrayBuilder> arg) {
+    protected static Consumer<ByteArrayBuilder> given(final Consumer<ByteArrayBuilder> arg) {
         return arg;
     }
 
-    protected static Consumer<MsgPackToken> doAssert(Consumer<MsgPackToken> arg) {
+    protected static Consumer<MsgPackToken> doAssert(final Consumer<MsgPackToken> arg) {
         return arg;
     }
 }

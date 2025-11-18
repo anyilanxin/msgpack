@@ -1,5 +1,6 @@
 /*
  * Copyright © 2017 camunda services GmbH (info@camunda.com)
+ * Copyright © 2025 anyilanxin zxh(anyilanxin@aliyun.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,9 +24,9 @@ public class POJOArray extends UnpackedObject {
     protected ArrayProperty<MinimalPOJO> simpleArrayProp;
 
     public POJOArray() {
-        this.simpleArrayProp = new ArrayProperty<>("simpleArray", new MinimalPOJO());
+        simpleArrayProp = new ArrayProperty<>("simpleArray", new MinimalPOJO());
 
-        this.declareProperty(simpleArrayProp);
+        declareProperty(simpleArrayProp);
     }
 
     public ValueArray<MinimalPOJO> simpleArray() {

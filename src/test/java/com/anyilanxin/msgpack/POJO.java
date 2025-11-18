@@ -1,5 +1,6 @@
 /*
  * Copyright © 2017 camunda services GmbH (info@camunda.com)
+ * Copyright © 2025 anyilanxin zxh(anyilanxin@aliyun.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,13 +16,7 @@
  */
 package com.anyilanxin.msgpack;
 
-import com.anyilanxin.msgpack.property.BinaryProperty;
-import com.anyilanxin.msgpack.property.EnumProperty;
-import com.anyilanxin.msgpack.property.IntegerProperty;
-import com.anyilanxin.msgpack.property.LongProperty;
-import com.anyilanxin.msgpack.property.ObjectProperty;
-import com.anyilanxin.msgpack.property.PackedProperty;
-import com.anyilanxin.msgpack.property.StringProperty;
+import com.anyilanxin.msgpack.property.*;
 import org.agrona.DirectBuffer;
 
 public class POJO extends UnpackedObject {
@@ -36,7 +31,7 @@ public class POJO extends UnpackedObject {
             new ObjectProperty<>("objectProp", new POJONested());
 
     public POJO() {
-        this.declareProperty(enumProp)
+        declareProperty(enumProp)
                 .declareProperty(longProp)
                 .declareProperty(intProp)
                 .declareProperty(stringProp)
@@ -45,48 +40,48 @@ public class POJO extends UnpackedObject {
                 .declareProperty(objectProp);
     }
 
-    public void setEnum(POJOEnum val) {
-        this.enumProp.setValue(val);
+    public void setEnum(final POJOEnum val) {
+        enumProp.setValue(val);
     }
 
     public POJOEnum getEnum() {
-        return this.enumProp.getValue();
+        return enumProp.getValue();
     }
 
-    public void setLong(long val) {
-        this.longProp.setValue(val);
+    public void setLong(final long val) {
+        longProp.setValue(val);
     }
 
     public long getLong() {
         return longProp.getValue();
     }
 
-    public void setInt(int val) {
-        this.intProp.setValue(val);
+    public void setInt(final int val) {
+        intProp.setValue(val);
     }
 
     public int getInt() {
         return intProp.getValue();
     }
 
-    public void setString(DirectBuffer buffer) {
-        this.stringProp.setValue(buffer);
+    public void setString(final DirectBuffer buffer) {
+        stringProp.setValue(buffer);
     }
 
     public DirectBuffer getString() {
         return stringProp.getValue();
     }
 
-    public void setPacked(DirectBuffer buffer) {
-        this.packedProp.setValue(buffer, 0, buffer.capacity());
+    public void setPacked(final DirectBuffer buffer) {
+        packedProp.setValue(buffer, 0, buffer.capacity());
     }
 
     public DirectBuffer getPacked() {
         return packedProp.getValue();
     }
 
-    public void setBinary(DirectBuffer buffer) {
-        this.binaryProp.setValue(buffer, 0, buffer.capacity());
+    public void setBinary(final DirectBuffer buffer) {
+        binaryProp.setValue(buffer, 0, buffer.capacity());
     }
 
     public DirectBuffer getBinary() {
