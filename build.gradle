@@ -60,7 +60,7 @@ compileJava {
 	options.forkOptions.jvmArgs += ['-Xlint:-deprecation']
 }
 
-// 指定所有项目maven仓库
+
 repositories {
 	maven {
 		url 'https://maven.aliyun.com/repository/central/'
@@ -76,7 +76,6 @@ configurations.configureEach {
 }
 
 
-// 定义跳过测试的 build 任务
 tasks.register('buildSkipTest') {
 	group = 'build'
 	description = 'Builds the project skip tests'
