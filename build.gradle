@@ -51,11 +51,6 @@ tasks.withType(Test).configureEach {
 	]
 }
 
-compileJava {
-	options.fork = true
-	options.forkOptions.jvmArgs += ['-Xlint:-deprecation']
-}
-
 
 repositories {
 	maven {
