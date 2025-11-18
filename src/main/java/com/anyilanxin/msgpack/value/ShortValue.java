@@ -14,6 +14,7 @@ package com.anyilanxin.msgpack.value;
 
 import com.anyilanxin.msgpack.spec.MsgPackReader;
 import com.anyilanxin.msgpack.spec.MsgPackWriter;
+
 import java.util.Objects;
 
 /**
@@ -58,7 +59,7 @@ public class ShortValue extends BaseValue {
     final long longValue = reader.readInteger();
     if (longValue < Short.MIN_VALUE || longValue > Short.MAX_VALUE) {
       throw new RuntimeException(
-          String.format("Value doesn't fit into an integer: %s.", longValue));
+              String.format("Value doesn't fit into an short: %s.", longValue));
     }
     value = (short) longValue;
   }
