@@ -16,17 +16,16 @@
  */
 package com.anyilanxin.msgpack.util;
 
+import static com.anyilanxin.msgpack.util.StringUtil.getBytes;
+
 import com.anyilanxin.msgpack.buffer.BufferReader;
 import com.anyilanxin.msgpack.buffer.BufferWriter;
+import java.nio.ByteOrder;
+import java.nio.charset.StandardCharsets;
 import org.agrona.DirectBuffer;
 import org.agrona.ExpandableArrayBuffer;
 import org.agrona.MutableDirectBuffer;
 import org.agrona.concurrent.UnsafeBuffer;
-
-import java.nio.ByteOrder;
-import java.nio.charset.StandardCharsets;
-
-import static com.anyilanxin.msgpack.util.StringUtil.getBytes;
 
 public final class BufferUtil {
   public static final int NO_WRAP = 1;
@@ -146,13 +145,13 @@ public final class BufferUtil {
     return bufferAsHexString(buffer, offset, length, DEFAULT_WRAP);
   }
 
-    public static DirectBuffer createCopy(final BufferWriter writer) {
-        final var buffer = new UnsafeBuffer(new byte[writer.getLength()]);
-        writer.write(buffer, 0);
-        return buffer;
-    }
+  public static DirectBuffer createCopy(final BufferWriter writer) {
+    final var buffer = new UnsafeBuffer(new byte[writer.getLength()]);
+    writer.write(buffer, 0);
+    return buffer;
+  }
 
-    public static String bufferAsHexString(
+  public static String bufferAsHexString(
       final DirectBuffer buffer, final int offset, final int length, final int wrap) {
     final byte[] bytes = new byte[length];
     buffer.getBytes(offset, bytes, 0, length);

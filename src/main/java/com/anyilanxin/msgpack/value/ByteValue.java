@@ -57,7 +57,12 @@ public class ByteValue extends BaseValue {
 
   @Override
   public void read(final MsgPackReader reader) {
-    value = reader.readByte();
+    final long longValue = reader.readInteger();
+    if (longValue < Byte.MIN_VALUE || longValue > Byte.MAX_VALUE) {
+      throw new RuntimeException(
+          String.format("Value doesn't fit into an integer: %s.", longValue));
+    }
+    value = (byte) longValue;
   }
 
   @Override

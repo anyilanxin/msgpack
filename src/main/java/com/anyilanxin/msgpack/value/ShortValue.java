@@ -12,8 +12,6 @@
  */
 package com.anyilanxin.msgpack.value;
 
-import static com.anyilanxin.msgpack.spec.MsgPackWriter.getEncodedLongValueLength;
-
 import com.anyilanxin.msgpack.spec.MsgPackReader;
 import com.anyilanxin.msgpack.spec.MsgPackWriter;
 import java.util.Objects;
@@ -57,12 +55,17 @@ public class ShortValue extends BaseValue {
 
   @Override
   public void read(final MsgPackReader reader) {
-    value = reader.readShort();
+    final long longValue = reader.readInteger();
+    if (longValue < Short.MIN_VALUE || longValue > Short.MAX_VALUE) {
+      throw new RuntimeException(
+          String.format("Value doesn't fit into an integer: %s.", longValue));
+    }
+    value = (short) longValue;
   }
 
   @Override
   public int getEncodedLength() {
-    return getEncodedLongValueLength(value);
+    return MsgPackWriter.getEncodedLongValueLength(value);
   }
 
   @Override
@@ -70,9 +73,12 @@ public class ShortValue extends BaseValue {
     if (this == o) {
       return true;
     }
-    if (!(o instanceof final ShortValue that)) {
+
+    if (!(o instanceof ShortValue)) {
       return false;
     }
+
+    final ShortValue that = (ShortValue) o;
     return getValue() == that.getValue();
   }
 

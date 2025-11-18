@@ -13,24 +13,22 @@
 package com.anyilanxin.msgpack.util;
 
 import com.anyilanxin.msgpack.buffer.BufferWriter;
+import java.nio.ByteOrder;
 import org.agrona.sbe.MessageEncoderFlyweight;
 
-import java.nio.ByteOrder;
-
 public final class SbeUtil {
-    private SbeUtil() {
-    }
+  private SbeUtil() {}
 
-    public static void writeNested(
-            final BufferWriter writer,
-            final int headerLength,
-            final MessageEncoderFlyweight message,
-            final ByteOrder order) {
-        final int dataLength = writer.getLength();
-        final var limit = message.limit();
+  public static void writeNested(
+      final BufferWriter writer,
+      final int headerLength,
+      final MessageEncoderFlyweight message,
+      final ByteOrder order) {
+    final int dataLength = writer.getLength();
+    final var limit = message.limit();
 
-        message.limit(limit + headerLength + dataLength);
-        message.buffer().putInt(limit, dataLength, order);
-        writer.write(message.buffer(), limit + headerLength);
-    }
+    message.limit(limit + headerLength + dataLength);
+    message.buffer().putInt(limit, dataLength, order);
+    writer.write(message.buffer(), limit + headerLength);
+  }
 }

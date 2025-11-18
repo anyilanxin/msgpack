@@ -57,7 +57,12 @@ public class FloatValue extends BaseValue {
 
   @Override
   public void read(final MsgPackReader reader) {
-    value = reader.readFloat();
+    final double doubleValue = reader.readDouble();
+    if (doubleValue < Float.MIN_VALUE || doubleValue > Float.MAX_VALUE) {
+      throw new RuntimeException(
+          String.format("Value doesn't fit into an integer: %s.", doubleValue));
+    }
+    value = (float) doubleValue;
   }
 
   @Override

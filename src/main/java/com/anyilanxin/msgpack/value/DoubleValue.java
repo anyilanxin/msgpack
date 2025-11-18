@@ -57,7 +57,7 @@ public class DoubleValue extends BaseValue {
 
   @Override
   public void read(final MsgPackReader reader) {
-    value = reader.readFloat();
+    value = reader.readDouble();
   }
 
   @Override

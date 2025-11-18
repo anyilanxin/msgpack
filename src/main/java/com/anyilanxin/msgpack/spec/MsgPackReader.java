@@ -247,76 +247,6 @@ public final class MsgPackReader {
    *
    * @return the value
    */
-  public float readFloat() {
-    final byte headerByte = buffer.getByte(offset);
-    ++offset;
-    final float value;
-    if (headerByte == FLOAT32) {
-      value = buffer.getFloat(offset, BYTE_ORDER);
-      offset += 4;
-    } else {
-      throw exceptionOnUnknownHeader("float", headerByte);
-    }
-
-    return value;
-  }
-
-  /**
-   * Float is the term in the msgpack spec for all values represented by Java types float and double
-   *
-   * @return the value
-   */
-  public byte readByte() {
-    final byte headerByte = buffer.getByte(offset);
-    ++offset;
-    final byte value;
-    if (headerByte == INT8) {
-      value = buffer.getByte(offset);
-      ++offset;
-    } else {
-      throw exceptionOnUnknownHeader("float", headerByte);
-    }
-    return value;
-  }
-
-  /**
-   * Float is the term in the msgpack spec for all values represented by Java types float and double
-   *
-   * @return the value
-   */
-  public short readShort() {
-    final byte headerByte = buffer.getByte(offset);
-    ++offset;
-    final short value;
-    switch (headerByte) {
-      case INT8:
-        value = buffer.getByte(offset);
-        ++offset;
-        break;
-      case INT16:
-        value = buffer.getShort(offset, BYTE_ORDER);
-        offset += 2;
-        break;
-      case UINT8:
-        value = buffer.getByte(offset);
-        ++offset;
-        break;
-      case UINT16:
-        value = buffer.getShort(offset, BYTE_ORDER);
-        offset += 2;
-        break;
-      default:
-        throw exceptionOnUnknownHeader("long", headerByte);
-    }
-
-    return value;
-  }
-
-  /**
-   * Float is the term in the msgpack spec for all values represented by Java types float and double
-   *
-   * @return the value
-   */
   public double readDouble() {
     final byte headerByte = buffer.getByte(offset);
     ++offset;
@@ -362,15 +292,15 @@ public final class MsgPackReader {
         break;
       case BYTE:
         token.setType(MsgPackType.BYTE);
-        token.setValue(readByte());
+        token.setValue(readInteger());
         break;
       case SHORT:
         token.setType(MsgPackType.SHORT);
-        token.setValue(readShort());
+        token.setValue(readInteger());
         break;
       case FLOAT:
         token.setType(MsgPackType.FLOAT);
-        token.setValue(readFloat());
+        token.setValue(readDouble());
         break;
       case DOUBLE:
         token.setType(MsgPackType.DOUBLE);
